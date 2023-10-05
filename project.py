@@ -19,6 +19,8 @@ class Config(BaseSettings):
 
     movie_rate_value: float = 8.5
 
+    sleep_timeout: int = 3
+
 
 config = Config(_env_file=find_dotenv('.env'))
 config.tmdb_account_id = get_tmdb_account_id()
