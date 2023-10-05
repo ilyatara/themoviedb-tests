@@ -7,10 +7,17 @@ from themoviedb_tests.data.movies import fight_club
 
 def test_get_rated_movies_list(fill_rated_movies_list):
     # ACT
+    time.sleep(3)  # ожидание после запроса в фикстуре, чтобы список успел обновиться
     response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     # ASSERT
     assert response.status_code == 200
     validate_schema(response.json(), get_path('tests', 'api', 'schemas', 'rated_movies.json'))
+    movie_from_response = response.json()['results'][0]
+    assert movie_from_response['title'] == fight_club.title
+    assert movie_from_response['id'] == fight_club.id
+    assert movie_from_response['original_language'] == fight_club.original_language
+    assert movie_from_response['release_date'] == fight_club.release_date
+    assert movie_from_response['rating'] == project.config.movie_rate_value
 
 
 def test_add_movie_rate(clear_rated_movies_list):

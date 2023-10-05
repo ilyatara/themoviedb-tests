@@ -20,10 +20,13 @@ class Movie:
 
 
 fight_club = Movie(
-    id = 550,
-    title = 'Fight Club',
-    original_language = 'en',
-    overview = 'A ticking-time-bomb insomniac and a slippery soap salesman '
-               'channel primal male aggression into a shocking new form of therapy.',
-    release_date = datetime.date(1999, 10, 15)
+    id=550,
+    title='Fight Club',
+    original_language='en',
+    overview='A ticking-time-bomb insomniac and a slippery soap salesman channel '
+             'primal male aggression into a shocking new form of therapy. Their '
+             'concept catches on, with underground \"fight clubs\" forming in every '
+             'town, until an eccentric gets in the way and ignites an out-of-control '
+             'spiral toward oblivion.',
+    release_date=datetime.date(1999, 10, 15)
 )
