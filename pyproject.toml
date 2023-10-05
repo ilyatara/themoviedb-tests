@@ -7,6 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+allure-pytest = "^2.13.2"
+requests = "^2.31.0"
+curlify = "^2.2.1"
+jsonschema = "^4.19.1"
+pytest = "^7.4.2"
 
 
 [build-system]
