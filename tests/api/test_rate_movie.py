@@ -7,7 +7,7 @@ from themoviedb_tests.data.movies import fight_club
 
 def test_get_rated_movies_list(fill_rated_movies_list):
     # ACT
-    time.sleep(project.config.sleep_timeout)  # ожидание после запроса в фикстуре, чтобы список успел обновиться
+    time.sleep(project.config.sleep_timeout)  # wait after request in fixture for the list to get updated
     response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     # ASSERT
     assert response.status_code == 200
