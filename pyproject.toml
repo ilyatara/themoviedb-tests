@@ -12,8 +12,14 @@ requests = "^2.31.0"
 curlify = "^2.2.1"
 jsonschema = "^4.19.1"
 pytest = "^7.4.2"
+pydantic-settings = "^2.0.3"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+#addopts = "--alluredir=allure-results --clean-alluredir -s"
+addopts = "-s"

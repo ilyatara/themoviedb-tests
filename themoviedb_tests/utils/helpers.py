@@ -15,10 +15,10 @@ def get_path(*segments):
     return abspath(join(project_root, *segments))
 
 
-def validate_schema(response, path_to_schema):
+def validate_schema(response_json, path_to_schema):
     with open(path_to_schema) as file:
         schema = json.loads(file.read())
-    validate(instance=response.json(), schema=schema)
+    validate(instance=response_json, schema=schema)
 
 
 def tmdb_request(method, relative_url, **kwargs):
@@ -30,7 +30,7 @@ def tmdb_request(method, relative_url, **kwargs):
     with allure.step(f'{method.upper()} {relative_url}'):
         with sessions.Session() as session:
             session.headers.update(
-                {'Authorization': f'Bearer {project.config.tmdb_read_access_token}'}
+                {'Authorization': f'Bearer {project.config.tmbd_read_access_token}'}
             )
             response = session.request(method=method, url=absolute_url, **kwargs)
 
@@ -58,3 +58,9 @@ def tmdb_request(method, relative_url, **kwargs):
                 )
 
     return response
+
+
+def get_tmdb_account_id():
+    response = tmdb_request('get', f'/account/{project.config.tmdb_login}')
+    account_id = response.json()['id']
+    return account_id
