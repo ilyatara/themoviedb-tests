@@ -90,7 +90,7 @@ def save_authorization_cookie():
     # browser.driver.delete_cookie('tmdb.session')
 
     browser.open(project.config.tmdb_base_web_url + '/login')
-    if browser.element('#onetrust-accept-btn-handler').matching(be.visible):
+    if browser.element('#onetrust-accept-btn-handler').with_(timeout=2).wait_until(be.visible):
         browser.element('#onetrust-accept-btn-handler').click()
     browser.element('#username').type(project.config.tmdb_login)
     browser.element('#password').type(project.config.tmdb_password)
