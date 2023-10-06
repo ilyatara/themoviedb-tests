@@ -23,9 +23,7 @@ def validate_schema(response_json, path_to_schema):
 
 def tmdb_request(method, relative_url, **kwargs):
 
-    absolute_url = (project.config.tmdb_base_api_url +
-                   project.config.tmdb_api_version +
-                   relative_url)
+    absolute_url = project.config.tmdb_base_api_url + relative_url
 
     with allure.step(f'{method.upper()} {relative_url}'):
         with sessions.Session() as session:
