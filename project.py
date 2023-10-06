@@ -28,7 +28,7 @@ class Config(BaseSettings):
 
     selenoid_login: Optional[str] = None
     selenoid_password: Optional[str] = None
-    selenoid_remote_url: Optional[str] = None
+    selenoid_base_url: Optional[str] = None
 
 
 config = Config(_env_file=find_dotenv('.env'))

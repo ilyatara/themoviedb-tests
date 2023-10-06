@@ -7,9 +7,8 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selene import browser
 from dotenv import load_dotenv
 
-
 import project
-# from utils import attach
+from themoviedb_tests.utils import attach
 
 
 @pytest.fixture(scope='session', autouse=True)
@@ -40,10 +39,10 @@ def setup_browser(request):
 
         login = project.config.selenoid_login
         password = project.config.selenoid_password
-        protocol = project.config.selenoid_remote_url.split('://')[0]
-        url = project.config.selenoid_remote_url.split('://')[1]
+        protocol = project.config.selenoid_base_url.split('://')[0]
+        domain = project.config.selenoid_base_url.split('://')[1]
         driver = webdriver.Remote(
-            command_executor=f"{protocol}://{login}:{password}@{url}",
+            command_executor=f"{protocol}://{login}:{password}@{domain}/wd/hub",
             options=options
         )
         browser.config.driver = driver
@@ -53,8 +52,11 @@ def setup_browser(request):
 
     yield browser
 
-    # attach.add_html(browser)
-    # attach.add_screenshot(browser)
-    # attach.add_logs(browser)
-    # attach.add_video(browser)
+    attach.add_html(browser)
+    attach.add_screenshot(browser)
+    attach.add_logs(browser)
+
+    if project.config.context == 'selenoid':
+        attach.add_video(browser)
+
     browser.quit()
