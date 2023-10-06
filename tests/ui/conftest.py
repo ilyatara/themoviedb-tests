@@ -1,19 +1,14 @@
 import os
+import urllib
 
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selene import browser
-from dotenv import load_dotenv
 
 import project
 from themoviedb_tests.utils import attach
-
-
-@pytest.fixture(scope='session', autouse=True)
-def load_env():
-    load_dotenv()
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -60,3 +55,12 @@ def setup_browser(request):
         attach.add_video(browser)
 
     browser.quit()
+
+
+@pytest.fixture(scope='function', autouse=True)
+def set_language_preference():
+    cookie = '{"adult":false,"i18n_fallback_language":"","locale":"en-US",' \
+             '"country_code":"US","timezone":"America/New_York"}'
+    cookie_encoded = urllib.parse.quote(cookie)
+    browser.open(project.config.tmdb_base_web_url)
+    browser.driver.add_cookie({'name': 'tmdb.prefs', 'value': cookie_encoded})
