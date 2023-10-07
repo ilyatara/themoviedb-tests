@@ -13,12 +13,8 @@ class Movie:
     release_date: datetime.date
 
     @property
-    def release_date(self):
-        return self._release_date.strftime('%Y-%m-%d')
-
-    @release_date.setter
-    def release_date(self, value):
-        self._release_date = value
+    def release_date_in_api(self):
+        return self.release_date.strftime('%Y-%m-%d')
 
     @property
     def release_date_in_ui_search_results(self):
@@ -26,7 +22,7 @@ class Movie:
             day_format = '%#d'
         else:
             day_format = '%-d'
-        return self._release_date.strftime(f'%B {day_format}, %Y')
+        return self.release_date.strftime(f'%B {day_format}, %Y')
 
 
 fight_club = Movie(

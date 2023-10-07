@@ -45,11 +45,6 @@ class SearchPage:
             result_overview = first_result.element('.overview').get(query.text)
             assert overview[:200] == result_overview[:200]
 
-
-    # def should_have_movie_search_result(self):
-    #     self.movie_search_results[0].element('h2').should(have.exact_text(self.search_request))
-    #     self.search_request = None
-
     def should_have_search_hints_visible(self):
         self.search_hints_container.should(be.visible)
         self.search_hints.should(have.size(10))

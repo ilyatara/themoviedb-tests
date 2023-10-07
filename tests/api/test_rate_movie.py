@@ -17,7 +17,7 @@ def test_get_rated_movies_list(fill_rated_movies_list):
     assert movie_from_response['title'] == fight_club.title
     assert movie_from_response['id'] == fight_club.id
     assert movie_from_response['original_language'] == fight_club.original_language
-    assert movie_from_response['release_date'] == fight_club.release_date
+    assert movie_from_response['release_date'] == fight_club.release_date_in_api
     assert movie_from_response['rating'] == project.config.movie_rate_value
 
 
