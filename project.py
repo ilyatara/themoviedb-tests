@@ -4,7 +4,6 @@ from typing import Optional, Literal
 from pydantic_settings import BaseSettings
 from dotenv import find_dotenv, load_dotenv
 
-# from themoviedb_tests.utils.api import get_tmdb_account_id
 from themoviedb_tests import utils
 
 

@@ -29,11 +29,19 @@ class SearchPage:
         self.search_menu_tabs_counters.should(
             have.exact_texts(['0'] * self.search_menu_tabs_count)
         )
-        # TODO: move to another test
-        browser.element('#movie').should(have.css_class(('active')))
-        browser.element('.search_results .movie').should(
-            have.exact_text('There are no movies that matched your query.')
+        self.should_have_search_tab_active_with_text(SearchTabs.movies)
+
+    def should_have_search_tab_active_with_text(self, search_tab):
+        browser.element(search_tab.css_id).click()
+        browser.element(search_tab.css_id).should(have.css_class(('active')))
+        self.search_results_container.element('.search_results:not(.hide)').should(
+            have.exact_text(search_tab.get_no_results_text())
         )
 
-    def should_have_menu_tabs_active_with_texts(self):
-        pass
+    # def should_have_search_tabs_active_with_texts(self):
+    #     for st in SearchTabs:
+    #         browser.element(st.css_id).click()
+    #         browser.element(st.css_id).should(have.css_class(('active')))
+    #         self.search_results_container.element('.search_results:not(.hide)').should(
+    #             have.exact_text(st.get_no_results_text())
+    #         )

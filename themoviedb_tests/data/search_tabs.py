@@ -13,3 +13,10 @@ class SearchTabs(enum.Enum):
     def __init__(self, vals):
         self.css_id = vals['css_id']
         self.tab_name = vals['tab_name']
+
+    def get_no_results_text(self):
+        if self.tab_name == 'TV Shows':
+            text = 'TV shows'
+        else:
+            text = self.tab_name.lower()
+        return f'There are no {text} that matched your query.'

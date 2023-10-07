@@ -1,10 +1,8 @@
 import json
 
 import allure
-import project
 from allure_commons.types import AttachmentType
 from curlify import to_curl
-
 from jsonschema import validate
 from requests import sessions
 
@@ -16,6 +14,8 @@ def validate_schema(response_json, path_to_schema):
 
 
 def tmdb_request(method, relative_url, **kwargs):
+
+    import project  # avoiding circular import
 
     absolute_url = project.config.tmdb_base_api_url + relative_url
 
@@ -53,6 +53,7 @@ def tmdb_request(method, relative_url, **kwargs):
 
 
 def get_tmdb_account_id():
+    import project  # avoiding circular import
     response = tmdb_request('get', f'/account/{project.config.tmdb_login}')
     account_id = response.json()['id']
     return account_id

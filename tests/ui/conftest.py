@@ -58,7 +58,7 @@ def setup_browser(request):
     browser.quit()
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='function', autouse=True)
 def set_language_preference():
     if project.config.context == 'selenoid':
         return
