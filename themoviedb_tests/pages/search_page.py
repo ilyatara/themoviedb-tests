@@ -1,5 +1,6 @@
 from selene import browser, be, have, query
 
+import project
 from themoviedb_tests import utils
 from themoviedb_tests.data.search_tabs import SearchTabs
 
@@ -33,22 +34,6 @@ class SearchPage:
         self.click_on_search_input()
         self.search_input.type(value).press_enter()
 
-    def first_search_result_should_have_movie_data(
-            self, title=None, release_date=None, overview=None):
-        first_result = self.movie_search_results[0]
-        if title is None:
-            title = self.search_request
-        first_result.element('h2').should(have.exact_text(title))
-        if release_date is not None:
-            first_result.element('.release_date').should(have.exact_text(release_date))
-        if overview is not None:
-            result_overview = first_result.element('.overview').get(query.text)
-            assert overview[:200] == result_overview[:200]
-
-    def should_have_search_hints_visible(self):
-        self.search_hints_container.should(be.visible)
-        self.search_hints.should(have.size(10))
-
     def should_have_contents_visible(self):
         self.search_input.should(be.visible)
         self.search_hints_container.should(be.not_.visible)
@@ -68,3 +53,23 @@ class SearchPage:
         self.search_results_container.element('.search_results:not(.hide)').should(
             have.exact_text(search_tab.get_no_results_text())
         )
+
+    def should_have_search_hints_visible(self):
+        self.search_hints_container.should(be.visible)
+        self.search_hints.should(have.size(10))
+
+    def should_have_movie_data_in_first_search_result(
+            self, title=None, release_date=None, overview=None, id=None):
+        first_result = self.movie_search_results[0]
+        if title is None:
+            title = self.search_request
+        first_result.element('h2').should(have.exact_text(title))
+        if release_date:
+            first_result.element('.release_date').should(have.exact_text(release_date))
+        if overview:
+            result_overview = first_result.element('.overview').get(query.text)
+            assert overview[:200] == result_overview[:200]
+        if id:
+            expected_link = f'{project.config.tmdb_base_web_url}/movie/{id}'
+            first_result.element('.title a').should(have.attribute('href', expected_link))
+            first_result.element('.image a').should(have.attribute('href', expected_link))

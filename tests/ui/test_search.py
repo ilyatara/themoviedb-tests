@@ -33,15 +33,16 @@ def test_search_hins_are_functional():
     page.open()
     page.click_on_search_input()
     page.click_on_search_hint()
-    page.first_search_result_should_have_movie_data()
+    page.should_have_movie_data_in_first_search_result()
 
 
 def test_search_movie():
     page = SearchPage()
     page.open()
     page.send_search_request(fight_club.title)
-    page.first_search_result_should_have_movie_data(
+    page.should_have_movie_data_in_first_search_result(
         fight_club.title,
         fight_club.release_date_in_ui_search_results,
-        fight_club.overview
+        fight_club.overview,
+        fight_club.id
     )
