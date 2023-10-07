@@ -68,7 +68,7 @@ def set_language_preference():
     browser.driver.add_cookie({'name': 'tmdb.prefs', 'value': cookie_encoded})
 
 
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='session', autouse=False)  # CHANGE TO TRUE
 def save_authorization_cookie():
     # Saving and later setting only one auth cookie
     # via requests doesn't get user logged in
