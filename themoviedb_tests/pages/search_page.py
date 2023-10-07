@@ -13,14 +13,15 @@ class SearchPage:
     search_menu_tabs_count = len(SearchTabs)
     search_menu_tabs_counters = browser.all('#search_menu_scroller span')
     search_results_container = browser.element('.white_column')
+    search_hints_container = browser.element('.k-animation-container')
 
     def open(self):
         browser.open(self.url)
         utils.ui.close_cookies_banner()
 
     def should_have_contents_visible(self):
-        # TODO: check that search suggestions are not available
         self.search_input.should(be.visible)
+        self.search_hints_container.should(be.not_.visible)
         self.search_menu.should(be.visible)
         self.search_results_container.should(be.visible)
         self.search_menu_tabs.should(
