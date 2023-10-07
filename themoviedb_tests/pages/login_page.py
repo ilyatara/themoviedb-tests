@@ -36,6 +36,8 @@ class LoginPage:
 
     def should_have_user_logged_in(self):
         profile_page = ProfilePage()
+        profile_url = project.config.tmdb_base_web_url + profile_page.url
+        assert browser.driver.current_url == profile_url
         profile_page.should_have_user_logged_in()
 
     def should_have_user_logged_out(self):
