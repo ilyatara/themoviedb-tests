@@ -10,6 +10,7 @@ import requests
 
 import project
 from themoviedb_tests import utils
+from themoviedb_tests.pages.profile_page import ProfilePage
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -69,7 +70,7 @@ def set_language_preference():
     browser.driver.add_cookie({'name': 'tmdb.prefs', 'value': cookie_encoded})
 
 
-@pytest.fixture(scope='session', autouse=False)  # CHANGE TO TRUE
+@pytest.fixture(scope='session', autouse=True)  # CHANGE TO TRUE
 def save_authorization_cookie():
     # Saving and later setting only one auth cookie
     # via requests doesn't get user logged in
@@ -109,3 +110,17 @@ def logged_in():
     auth_cookie = project.config.tmdb_auth_cookie
     browser.open(project.config.tmdb_base_web_url)
     browser.driver.add_cookie({'name': 'tmdb.session', 'value': auth_cookie})
+
+
+@pytest.fixture(scope='function', autouse=False)
+def clear_favorites():
+    utils.api.delete_all_favorites()
+    yield
+    utils.api.delete_all_favorites()
+    # page = ProfilePage()
+    # page.open_favorites()
+    # page.clear_favorites()
+    # yield
+    # page = ProfilePage()
+    # page.open_favorites()
+    # page.clear_favorites()

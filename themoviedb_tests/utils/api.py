@@ -6,6 +6,8 @@ from curlify import to_curl
 from jsonschema import validate
 from requests import sessions
 
+import project
+
 
 def validate_schema(response_json, path_to_schema):
     with open(path_to_schema) as file:
@@ -57,3 +59,13 @@ def get_tmdb_account_id():
     response = tmdb_request('get', f'/account/{project.config.tmdb_login}')
     account_id = response.json()['id']
     return account_id
+
+
+def delete_all_favorites():
+    url_get = f'/account/{project.config.tmdb_account_id}/favorite/movies'
+    url_post = f'/account/{project.config.tmdb_account_id}/favorite'
+    response = tmdb_request('get', url_get)
+    fav_ids = [fav['id'] for fav in response.json()['results']]
+    for id in fav_ids:
+        json = {"media_type": "movie", "media_id": id, "favorite": False}
+        tmdb_request('post', url_post, json=json)

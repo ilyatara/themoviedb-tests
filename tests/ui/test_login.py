@@ -37,11 +37,11 @@ def test_login_with_invalid_password():
     page.should_have_user_logged_out()
 
 
-def test_login_with_empty_username():
+def test_login_with_empty_password():
     # ACT
     page = LoginPage()
     page.open()
-    page.send_username_and_password('', project.config.tmdb_password)
+    page.send_username_and_password(project.config.tmdb_login, '')
     # ASSERT
     page.should_have_warning_visible()
     page.should_have_user_logged_out()

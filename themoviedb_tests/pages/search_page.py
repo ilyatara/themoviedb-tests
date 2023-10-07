@@ -26,7 +26,7 @@ class SearchPage:
     def click_on_search_input(self):
         self.search_input.click()
 
-    def click_on_search_hint(self, index=4):
+    def click_on_search_hint(self, index=1):
         self.search_request = self.search_hints[index].get(query.text)
         self.search_hints[index].click()
 
