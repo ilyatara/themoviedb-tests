@@ -8,7 +8,7 @@ from themoviedb_tests.data.movies import fight_club
 
 def test_get_rated_movies_list(fill_rated_movies_list):
     # ACT
-    time.sleep(project.config.sleep_timeout)  # wait after request in fixture for the list to get updated
+    time.sleep(project.config.api_timeout)  # wait after request in fixture for the list to get updated
     response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     # ASSERT
     assert response.status_code == 200
@@ -28,7 +28,7 @@ def test_add_movie_rate(clear_rated_movies_list):
     # ASSERT
     assert response.status_code == 201
     assert list(response.json().keys()) == ['success', 'status_code', 'status_message']
-    time.sleep(project.config.sleep_timeout)
+    time.sleep(project.config.api_timeout)
     rated_movies = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     assert len(rated_movies.json()['results']) == 1
     assert rated_movies.json()['results'][0]['title'] == fight_club.title
@@ -41,6 +41,6 @@ def test_delete_movie_rate(fill_rated_movies_list):
     # ASSERT
     assert response.status_code == 200
     assert list(response.json().keys()) == ['success', 'status_code', 'status_message']
-    time.sleep(project.config.sleep_timeout)
+    time.sleep(project.config.api_timeout)
     rated_movies = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     assert rated_movies.json()['results'] == []
