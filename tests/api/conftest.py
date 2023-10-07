@@ -1,7 +1,7 @@
 import pytest
 
 import project
-from themoviedb_tests.utils.helpers import tmdb_request
+from themoviedb_tests.utils.api import tmdb_request
 from themoviedb_tests.data.movies import fight_club
 
 

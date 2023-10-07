@@ -4,7 +4,8 @@ from typing import Optional, Literal
 from pydantic_settings import BaseSettings
 from dotenv import find_dotenv, load_dotenv
 
-from themoviedb_tests.utils.helpers import get_tmdb_account_id
+# from themoviedb_tests.utils.api import get_tmdb_account_id
+from themoviedb_tests import utils
 
 
 class Config(BaseSettings):
@@ -32,5 +33,5 @@ class Config(BaseSettings):
 
 
 config = Config(_env_file=find_dotenv('.env'))
-# config.tmdb_account_id = get_tmdb_account_id()
-config.tmdb_account_id = 20525440
+config.tmdb_account_id = utils.api.get_tmdb_account_id()
+# config.tmdb_account_id = 20525440

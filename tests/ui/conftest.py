@@ -8,7 +8,7 @@ from selene import browser, be
 import requests
 
 import project
-from themoviedb_tests.utils import attach, helpers
+from themoviedb_tests import utils
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -47,12 +47,12 @@ def setup_browser(request):
 
     yield browser
 
-    attach.add_html(browser)
-    attach.add_screenshot(browser)
-    attach.add_logs(browser)
+    utils.ui.attach_html(browser)
+    utils.ui.attach_screenshot(browser)
+    utils.ui.attach_logs(browser)
 
     if project.config.context == 'selenoid':
-        attach.add_video(browser)
+        utils.ui.attach_video(browser)
 
     browser.quit()
 

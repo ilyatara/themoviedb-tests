@@ -1,18 +1,12 @@
 import json
-from os.path import abspath, dirname, join
 
 import allure
-from allure_commons.types import AttachmentType
-from requests import sessions
-from curlify import to_curl
-from jsonschema.validators import validate
-
 import project
+from allure_commons.types import AttachmentType
+from curlify import to_curl
 
-
-def get_path(*segments):
-    project_root = abspath(dirname(dirname(dirname(__file__))))
-    return abspath(join(project_root, *segments))
+from jsonschema import validate
+from requests import sessions
 
 
 def validate_schema(response_json, path_to_schema):

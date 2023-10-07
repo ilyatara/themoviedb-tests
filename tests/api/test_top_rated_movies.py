@@ -2,7 +2,8 @@ from datetime import datetime
 
 import pytest
 
-from themoviedb_tests.utils.helpers import tmdb_request, validate_schema, get_path
+from themoviedb_tests.utils.file import get_path
+from themoviedb_tests.utils.api import validate_schema, tmdb_request
 from themoviedb_tests.data.movies import Movie
 
 
