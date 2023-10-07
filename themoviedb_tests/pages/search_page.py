@@ -28,9 +28,27 @@ class SearchPage:
         self.search_request = self.search_hints[index].get(query.text)
         self.search_hints[index].click()
 
-    def should_have_movie_search_result(self):
-        self.movie_search_results[0].element('h2').should(have.exact_text(self.search_request))
-        self.search_request = None
+    def send_search_request(self, value):
+        self.search_request = value
+        self.click_on_search_input()
+        self.search_input.type(value).press_enter()
+
+    def first_search_result_should_have_movie_data(
+            self, title=None, release_date=None, overview=None):
+        first_result = self.movie_search_results[0]
+        if title is None:
+            title = self.search_request
+        first_result.element('h2').should(have.exact_text(title))
+        if release_date is not None:
+            first_result.element('.release_date').should(have.exact_text(release_date))
+        if overview is not None:
+            result_overview = first_result.element('.overview').get(query.text)
+            assert overview[:200] == result_overview[:200]
+
+
+    # def should_have_movie_search_result(self):
+    #     self.movie_search_results[0].element('h2').should(have.exact_text(self.search_request))
+    #     self.search_request = None
 
     def should_have_search_hints_visible(self):
         self.search_hints_container.should(be.visible)

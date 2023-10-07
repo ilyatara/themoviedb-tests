@@ -1,5 +1,6 @@
 from themoviedb_tests.pages.search_page import SearchPage
 from themoviedb_tests.data.search_tabs import SearchTabs
+from themoviedb_tests.data.movies import fight_club
 
 
 def test_search_page_contents():
@@ -32,4 +33,15 @@ def test_search_hins_are_functional():
     page.open()
     page.click_on_search_input()
     page.click_on_search_hint()
-    page.should_have_movie_search_result()
+    page.first_search_result_should_have_movie_data()
+
+
+def test_search_movie():
+    page = SearchPage()
+    page.open()
+    page.send_search_request(fight_club.title)
+    page.first_search_result_should_have_movie_data(
+        fight_club.title,
+        fight_club.release_date_in_ui_search_results,
+        fight_club.overview
+    )

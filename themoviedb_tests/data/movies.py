@@ -1,3 +1,5 @@
+import platform
+
 import datetime
 from dataclasses import dataclass
 
@@ -12,11 +14,19 @@ class Movie:
 
     @property
     def release_date(self):
-        return self._release_date
+        return self._release_date.strftime('%Y-%m-%d')
 
     @release_date.setter
     def release_date(self, value):
-        self._release_date = value.strftime('%Y-%m-%d')
+        self._release_date = value
+
+    @property
+    def release_date_in_ui_search_results(self):
+        if platform.system() == 'Windows':
+            day_format = '%#d'
+        else:
+            day_format = '%-d'
+        return self._release_date.strftime(f'%B {day_format}, %Y')
 
 
 fight_club = Movie(
