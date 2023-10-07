@@ -17,6 +17,7 @@ class SearchPage:
     search_hints_container = browser.element('.k-animation-container')
     search_hints = search_hints_container.all('li')
     movie_search_results = search_results_container.all('div[id^=card_movie_')
+    people_search_results = search_results_container.all('div.list_item')
 
     def open(self):
         browser.open(self.url)
@@ -73,3 +74,13 @@ class SearchPage:
             expected_link = f'{project.config.tmdb_base_web_url}/movie/{id}'
             first_result.element('.title a').should(have.attribute('href', expected_link))
             first_result.element('.image a').should(have.attribute('href', expected_link))
+
+    def should_have_person_data_in_first_search_result(self, full_name, known_for, movies, id):
+        first_result = self.people_search_results[0]
+        first_result.element('.name').should(have.exact_text(full_name))
+        first_result.element('.sub span').should(have.exact_text(known_for))
+        for movie in movies:
+            first_result.element('.sub').should(have.text(movie))
+        expected_link = f'{project.config.tmdb_base_web_url}/person/{id}'
+        first_result.element('.name a').should(have.attribute('href', expected_link))
+        first_result.element('.image_content a').should(have.attribute('href', expected_link))
