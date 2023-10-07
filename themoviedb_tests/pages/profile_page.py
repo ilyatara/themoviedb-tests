@@ -3,7 +3,7 @@ from selene import browser, be, have
 import project
 
 
-class SettingsPage:
+class ProfilePage:
     url = f'/u/{project.config.tmdb_login}'
     menu_items = browser.all('#new_shortcut_bar > li')
     header_profile_link = browser.element(

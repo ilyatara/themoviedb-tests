@@ -2,7 +2,7 @@ from selene import browser, be, have
 
 import project
 from themoviedb_tests import utils
-from themoviedb_tests.pages.settings_page import SettingsPage
+from themoviedb_tests.pages.profile_page import ProfilePage
 
 
 class LoginPage:
@@ -35,8 +35,8 @@ class LoginPage:
         self.warning_errors.should(have.size(errors_count))
 
     def should_have_user_logged_in(self):
-        settings_page = SettingsPage()
-        settings_page.should_have_user_logged_in()
+        profile_page = ProfilePage()
+        profile_page.should_have_user_logged_in()
 
     def should_have_user_logged_out(self):
         self.header_profile_link.should(be.not_.present)
