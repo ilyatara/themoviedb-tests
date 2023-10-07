@@ -30,7 +30,7 @@ def test_login_with_invalid_password():
     page.open()
     page.send_username_and_password(
         project.config.tmdb_login,
-        project.config.tmdb_password[::-1]
+        project.config.tmdb_password[:-1]
     )
     # ASSERT
     page.should_have_warning_visible()
