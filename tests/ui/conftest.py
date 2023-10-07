@@ -1,6 +1,7 @@
 import urllib
 
 import pytest
+import themoviedb_tests.utils.attach
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -47,12 +48,12 @@ def setup_browser(request):
 
     yield browser
 
-    utils.ui.attach_html(browser)
-    utils.ui.attach_screenshot(browser)
-    utils.ui.attach_logs(browser)
+    themoviedb_tests.utils.attach.add_html(browser)
+    themoviedb_tests.utils.attach.add_screenshot(browser)
+    themoviedb_tests.utils.attach.add_logs(browser)
 
     if project.config.context == 'selenoid':
-        utils.ui.attach_video(browser)
+        themoviedb_tests.utils.attach.add_video(browser)
 
     browser.quit()
 
@@ -90,8 +91,7 @@ def save_authorization_cookie():
     # browser.driver.delete_cookie('tmdb.session')
 
     browser.open(project.config.tmdb_base_web_url + '/login')
-    if browser.element('#onetrust-accept-btn-handler').with_(timeout=2).wait_until(be.visible):
-        browser.element('#onetrust-accept-btn-handler').click()
+    utils.ui.close_cookies_banner()
     browser.element('#username').type(project.config.tmdb_login)
     browser.element('#password').type(project.config.tmdb_password)
     browser.element('#login_button').click()

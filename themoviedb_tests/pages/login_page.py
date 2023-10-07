@@ -1,6 +1,7 @@
 from selene import browser, be, have
 
 import project
+from themoviedb_tests import utils
 from themoviedb_tests.pages.settings_page import SettingsPage
 
 
@@ -23,8 +24,7 @@ class LoginPage:
 
     def open(self):
         browser.open(self.url)
-        if self.accept_cookies_button.with_(timeout=2).wait_until(be.visible):
-            self.accept_cookies_button.click()
+        utils.ui.close_cookies_banner()
 
     def send_username_and_password(self, username, password):
         self.username_input.type(username)

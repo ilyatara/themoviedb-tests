@@ -1,5 +1,7 @@
 from selene import browser, be, have
 
+from themoviedb_tests import utils
+
 
 class SearchPage:
     url = '/search'
@@ -14,6 +16,7 @@ class SearchPage:
 
     def open(self):
         browser.open(self.url)
+        utils.ui.close_cookies_banner()
 
     def should_have_contents_visible(self):
         self.search_input.should(be.visible)
@@ -24,3 +27,5 @@ class SearchPage:
         browser.element('.search_results .movie').should(
             have.exact_text('There are no movies that matched your query.')
         )
+
+
