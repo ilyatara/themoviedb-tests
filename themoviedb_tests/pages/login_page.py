@@ -6,21 +6,19 @@ from themoviedb_tests.pages.settings_page import SettingsPage
 
 
 class LoginPage:
-
-    def __init__(self):
-        self.url = '/login'
-        self.page_header = browser.element('.wrapper h2')
-        self.username_input = browser.element('#username')
-        self.password_input = browser.element('#password')
-        self.submit_button = browser.element('#login_button')
-        self.reset_password_link = browser.element('.reset a')
-        self.warning = browser.element('.error_status')
-        self.warning_header = browser.element('.error_status a')
-        self.warning_errors = browser.all('.error_status li')
-        self.header_profile_link = browser.element(
-            f'.user a[href=/u/{project.config.tmdb_login}"]'
-        )
-        self.accept_cookies_button = browser.element('#onetrust-accept-btn-handler')
+    url = '/login'
+    page_header = browser.element('.wrapper h2')
+    username_input = browser.element('#username')
+    password_input = browser.element('#password')
+    submit_button = browser.element('#login_button')
+    reset_password_link = browser.element('.reset a')
+    warning = browser.element('.error_status')
+    warning_header = browser.element('.error_status a')
+    warning_errors = browser.all('.error_status li')
+    header_profile_link = browser.element(
+        f'.user a[href=/u/{project.config.tmdb_login}"]'
+    )
+    accept_cookies_button = browser.element('#onetrust-accept-btn-handler')
 
     def open(self):
         browser.open(self.url)
