@@ -53,11 +53,3 @@ def test_logged_in_user_is_redirected_to_profile(logged_in):
     page.open()
     # ASSERT
     page.should_have_user_logged_in()
-
-
-# def test_auth_cookie(logged_in):
-#     # ACT
-#     page = LoginPage()
-#     page.open()
-#     # ASSERT
-#     page.should_have_user_logged_in()

@@ -23,9 +23,6 @@ class ProfilePage:
         self.header_profile_link.should(be.not_.visible)
 
     def open_favorites(self):
-        # wait for data to update
-        # import time
-        # time.sleep(project.config.api_timeout)
         browser.open(self.favorites_url)
 
     def should_not_have_movie_in_favorites(self):
@@ -37,9 +34,3 @@ class ProfilePage:
         self.open_favorites()
         self.favorites_container.all('div[id^=card_movie_]')[0].element('.title h2')\
             .should(have.exact_text(movie.title))
-
-    # def clear_favorites(self):
-    #     self.open_favorites()
-    #     remove_buttons = self.favorites_container.all('span.remove')
-    #     for button in remove_buttons:
-    #         button.click()

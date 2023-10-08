@@ -1,7 +1,6 @@
 import urllib
 
 import pytest
-import themoviedb_tests.utils.attach
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -18,12 +17,13 @@ def setup_browser(request):
     browser.config.base_url = project.config.tmdb_base_web_url
     browser.config.timeout = project.config.selene_timeout
 
-    if project.config.browser == 'chrome':
-        options = ChromeOptions()
-    elif project.config.browser == 'firefox':
-        options = FirefoxOptions()
-
     if project.config.context == 'selenoid':
+
+        if project.config.browser == 'chrome':
+            options = ChromeOptions()
+        elif project.config.browser == 'firefox':
+            options = FirefoxOptions()
+
         selenoid_capabilities = {
             "browserName": project.config.browser,
             "browserVersion": project.config.browser_version,
@@ -43,18 +43,18 @@ def setup_browser(request):
             options=options
         )
         browser.config.driver = driver
+
     elif project.config.context == 'local':
         browser.config.driver_name = project.config.browser
-        # browser.config.driver_options = options
 
     yield browser
 
-    themoviedb_tests.utils.attach.add_html(browser)
-    themoviedb_tests.utils.attach.add_screenshot(browser)
-    themoviedb_tests.utils.attach.add_logs(browser)
+    utils.attach.add_html(browser)
+    utils.attach.add_screenshot(browser)
+    utils.attach.add_logs(browser)
 
     if project.config.context == 'selenoid':
-        themoviedb_tests.utils.attach.add_video(browser)
+        utils.attach.add_video(browser)
 
     browser.quit()
 
@@ -99,11 +99,6 @@ def save_authorization_cookie():
     project.config.tmdb_auth_cookie = browser.driver.get_cookie('tmdb.session')['value']
     browser.driver.delete_cookie('tmdb.session')
 
-    # browser.driver.delete_all_cookies()  # doesn't log out
-    # browser.open(project.config.tmdb_base_web_url + '/logout')
-    # browser.element(f'li.user a[href="/u/{project.config.tmdb_login}"]').click()
-    # browser.element('a[href="/logout"]').click()
-
 
 @pytest.fixture(scope='function', autouse=False)
 def logged_in():
@@ -117,10 +112,3 @@ def clear_favorites():
     utils.api.delete_all_favorites()
     yield
     utils.api.delete_all_favorites()
-    # page = ProfilePage()
-    # page.open_favorites()
-    # page.clear_favorites()
-    # yield
-    # page = ProfilePage()
-    # page.open_favorites()
-    # page.clear_favorites()

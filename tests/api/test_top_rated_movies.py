@@ -71,7 +71,7 @@ def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index
     for attribute in movie_from_list.keys():
         if movie_details.get(attribute):
             if attribute == 'vote_average':
-                # on details page vote_averate has 3 numbers after the decimal point
+                # on details page vote_average has 3 numbers after the decimal point
                 assert movie_from_list[attribute] == round(movie_details[attribute], 1)
             elif attribute in ['vote_count', 'backdrop_path']:
                 # these attributes' values may differ for some reason

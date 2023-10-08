@@ -32,5 +32,4 @@ class Config(BaseSettings):
 
 
 config = Config(_env_file=find_dotenv('.env'))
-# config.tmdb_account_id = utils.api.get_tmdb_account_id()
-config.tmdb_account_id = 20525440
+config.tmdb_account_id = utils.api.get_tmdb_account_id()
