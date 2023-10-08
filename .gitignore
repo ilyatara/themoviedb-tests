@@ -2,3 +2,5 @@
 *.pyc
 .env
 allure-results/
+allure-report/
+notifications/telegram.json
