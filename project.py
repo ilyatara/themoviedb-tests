@@ -20,8 +20,8 @@ class Config(BaseSettings):
 
     movie_rate_value: float = 8.5
 
-    api_timeout: int = 4
-    selene_timeout: int = 5
+    api_timeout: int = 5
+    selene_timeout: int = 10
 
     browser: Literal['chrome', 'firefox'] = 'chrome'
     browser_version: Optional[Literal['100.0', '99.0', '98.0', '97.0']] = None
