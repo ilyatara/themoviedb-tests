@@ -1,7 +1,9 @@
+import time
+
 import allure
 from selene import browser, be, have, by
 
-from themoviedb_tests import utils
+import project
 from themoviedb_tests.pages.profile_page import ProfilePage
 
 
@@ -15,7 +17,6 @@ class MoviePage:
     def open(self):
         with allure.step('Open movie page'):
             browser.open(self.url)
-            utils.ui.close_cookies_banner()
 
     def add_to_favorites(self):
         with allure.step('Add movie to favorites'):
@@ -50,9 +51,12 @@ class MoviePage:
     def should_not_have_added_to_favorites(self):
         with allure.step('Check that movie wasn\'t added to favorites'):
             profile = ProfilePage()
+            # wait for changes to apply
+            time.sleep(project.config.selene_timeout)
             profile.should_not_have_movie_in_favorites()
 
     def should_have_added_to_favorites(self, movie):
         with allure.step('Check that movie was added to favorites'):
             profile = ProfilePage()
+            time.sleep(project.config.selene_timeout)
             profile.should_have_movie_in_favorites(movie)

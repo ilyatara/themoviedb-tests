@@ -2,7 +2,7 @@ from themoviedb_tests.pages.movie_page import MoviePage
 from themoviedb_tests.data.movies import fight_club
 
 
-def test_logged_out_user_cant_add_movie_to_favorites():
+def test_logged_out_user_can_not_add_movie_to_favorites():
     # ACT
     page = MoviePage(fight_club.id)
     page.open()

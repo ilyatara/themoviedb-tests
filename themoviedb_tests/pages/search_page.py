@@ -2,7 +2,6 @@ import allure
 from selene import browser, be, have, query
 
 import project
-from themoviedb_tests import utils
 from themoviedb_tests.data.search_tabs import SearchTabs
 
 
@@ -23,7 +22,6 @@ class SearchPage:
     def open(self):
         with allure.step('Open search page'):
             browser.open(self.url)
-            utils.ui.close_cookies_banner()
 
     def click_on_search_input(self):
         with allure.step('Click on search input'):

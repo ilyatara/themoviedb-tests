@@ -1,4 +1,5 @@
 import urllib
+import datetime
 
 import pytest
 from selenium import webdriver
@@ -61,16 +62,15 @@ def setup_browser(request):
 
 @pytest.fixture(scope='function', autouse=True)
 def set_language_preference():
-    if project.config.context == 'selenoid':
-        return
     cookie = '{"adult":false,"i18n_fallback_language":"","locale":"en-US",' \
              '"country_code":"US","timezone":"America/New_York"}'
     cookie_encoded = urllib.parse.quote(cookie)
     browser.open(project.config.tmdb_base_web_url)
     browser.driver.add_cookie({'name': 'tmdb.prefs', 'value': cookie_encoded})
+    utils.ui.close_cookies_banner()
 
 
-@pytest.fixture(scope='session', autouse=True)  # CHANGE TO TRUE
+@pytest.fixture(scope='session', autouse=True)
 def save_authorization_cookie():
     # Saving and later setting only one auth cookie
     # via requests doesn't get user logged in

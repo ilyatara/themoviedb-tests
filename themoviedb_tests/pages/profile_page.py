@@ -15,6 +15,10 @@ class ProfilePage:
     logged_out_menu_items_count = 2
     favorites_container = browser.element('.items_wrapper')
 
+    def open_favorites(self):
+        with allure.step('Open favorites section of profile page'):
+            browser.open(self.favorites_url)
+
     def should_have_user_logged_in(self):
         with allure.step('Check that user is logged in'):
             self.menu_items.should(have.size(self.logged_in_menu_items_count))
@@ -24,10 +28,6 @@ class ProfilePage:
         with allure.step('Check that user is logged out'):
             self.menu_itmes.should(have.size(self.logged_out_menu_items_count))
             self.header_profile_link.should(be.not_.visible)
-
-    def open_favorites(self):
-        with allure.step('Open favorites section of profile page'):
-            browser.open(self.favorites_url)
 
     def should_not_have_movie_in_favorites(self):
         with allure.step('Check that favorites list is empty'):

@@ -2,7 +2,6 @@ import allure
 from selene import browser, be, have
 
 import project
-from themoviedb_tests import utils
 from themoviedb_tests.pages.profile_page import ProfilePage
 
 
@@ -24,7 +23,6 @@ class LoginPage:
     def open(self):
         with allure.step('Open login page'):
             browser.open(self.url)
-            utils.ui.close_cookies_banner()
 
     def send_username_and_password(self, username, password):
         with allure.step(f"Send login credentials: "
