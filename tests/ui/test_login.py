@@ -1,9 +1,15 @@
-from selene import browser, be, have
+import allure
+from allure_commons.types import Severity
 
 import project
 from themoviedb_tests.pages.login_page import LoginPage
 
 
+@allure.tag('web')
+@allure.severity(Severity.CRITICAL)
+@allure.label('owner', 'Ilya Tarasov')
+@allure.feature('Authorization')
+@allure.title('Contents of the login page are displayed correctly')
 def test_login_page_contents():
     # ACT
     page = LoginPage()
@@ -12,6 +18,11 @@ def test_login_page_contents():
     page.should_have_content_visible()
 
 
+@allure.tag('web')
+@allure.severity(Severity.CRITICAL)
+@allure.label('owner', 'Ilya Tarasov')
+@allure.feature('Authorization')
+@allure.title('Log in with valid username and password')
 def test_login_with_valid_username_and_password():
     # ACT
     page = LoginPage()
@@ -24,6 +35,11 @@ def test_login_with_valid_username_and_password():
     page.should_have_user_logged_in()
 
 
+@allure.tag('web')
+@allure.severity(Severity.CRITICAL)
+@allure.label('owner', 'Ilya Tarasov')
+@allure.feature('Authorization')
+@allure.title('Log in with invalid password')
 def test_login_with_invalid_password():
     # ACT
     page = LoginPage()
@@ -37,6 +53,11 @@ def test_login_with_invalid_password():
     page.should_have_user_logged_out()
 
 
+@allure.tag('web')
+@allure.severity(Severity.CRITICAL)
+@allure.label('owner', 'Ilya Tarasov')
+@allure.feature('Authorization')
+@allure.title('Log in with empty password')
 def test_login_with_empty_password():
     # ACT
     page = LoginPage()
@@ -47,6 +68,11 @@ def test_login_with_empty_password():
     page.should_have_user_logged_out()
 
 
+@allure.tag('web')
+@allure.severity(Severity.CRITICAL)
+@allure.label('owner', 'Ilya Tarasov')
+@allure.feature('Authorization')
+@allure.title('Logged in user is redirected to profile from login page')
 def test_logged_in_user_is_redirected_to_profile(logged_in):
     # ACT
     page = LoginPage()
