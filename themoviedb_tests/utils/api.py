@@ -1,10 +1,11 @@
 import json
 
+import requests
+import pytest
 import allure
 from allure_commons.types import AttachmentType
 from curlify import to_curl
 from jsonschema import validate
-from requests import sessions
 
 import project
 
@@ -22,10 +23,11 @@ def tmdb_request(method, relative_url, **kwargs):
     absolute_url = project.config.tmdb_base_api_url + relative_url
 
     with allure.step(f'{method.upper()} {relative_url}'):
-        with sessions.Session() as session:
+        with requests.sessions.Session() as session:
             session.headers.update(
                 {'Authorization': f'Bearer {project.config.tmbd_read_access_token}'}
             )
+
             response = session.request(method=method, url=absolute_url, **kwargs)
 
             curl = to_curl(response.request)
@@ -35,7 +37,6 @@ def tmdb_request(method, relative_url, **kwargs):
                 attachment_type=AttachmentType.TEXT,
                 extension='txt'
             )
-
             if 'json' in response.headers.get('Content-Type'):
                 allure.attach(
                     body=json.dumps(response.json(), indent=4).encode('utf8'),
@@ -56,7 +57,7 @@ def tmdb_request(method, relative_url, **kwargs):
 
 def get_tmdb_account_id():
     import project  # avoiding circular import
-    response = tmdb_request('get', f'/account/{project.config.tmdb_login}')
+    response = tmdb_request('get', f'/account')
     account_id = response.json()['id']
     return account_id
 
