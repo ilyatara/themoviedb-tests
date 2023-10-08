@@ -22,5 +22,4 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.pytest.ini_options]
-#addopts = "--alluredir=allure-results --clean-alluredir -s"
-addopts = "-vv"
+addopts = "-vv --alluredir=allure-results --clean-alluredir"
