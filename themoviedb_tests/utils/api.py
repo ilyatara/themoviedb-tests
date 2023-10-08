@@ -36,14 +36,14 @@ def tmdb_request(method, relative_url, **kwargs):
                 extension='txt'
             )
 
-            try:
+            if 'json' in response.headers.get('Content-Type'):
                 allure.attach(
                     body=json.dumps(response.json(), indent=4).encode('utf8'),
                     name='Response Json',
                     attachment_type=AttachmentType.JSON,
                     extension='json'
                 )
-            except json.JSONDecodeError:
+            elif 'text' in response.headers.get('Content-Type'):
                 allure.attach(
                     body=response.text.encode('utf8'),
                     name='Response Text',
