@@ -1,3 +1,4 @@
+import allure
 from selene import browser, be, have
 
 import project
@@ -21,32 +22,39 @@ class LoginPage:
     accept_cookies_button = browser.element('#onetrust-accept-btn-handler')
 
     def open(self):
-        browser.open(self.url)
-        utils.ui.close_cookies_banner()
+        with allure.step('Open login page'):
+            browser.open(self.url)
+            utils.ui.close_cookies_banner()
 
     def send_username_and_password(self, username, password):
-        self.username_input.type(username)
-        self.password_input.type(password)
-        self.submit_button.click()
+        with allure.step(f"Send login credentials: "
+                         f"username='{username}', password='{password}'"):
+            self.username_input.type(username)
+            self.password_input.type(password)
+            self.submit_button.click()
 
     def should_have_warning_visible(self, errors_count=2):
-        self.warning.should(be.visible)
-        self.warning_header.should(have.text('There was a problem'))
-        self.warning_errors.should(have.size(errors_count))
+        with allure.step('Check that form validation errors are visible'):
+            self.warning.should(be.visible)
+            self.warning_header.should(have.text('There was a problem'))
+            self.warning_errors.should(have.size(errors_count))
 
     def should_have_user_logged_in(self):
-        profile_page = ProfilePage()
-        profile_url = project.config.tmdb_base_web_url + profile_page.url
-        assert browser.driver.current_url == profile_url
-        profile_page.should_have_user_logged_in()
+        with allure.step('Check that user is redirected to profile'):
+            profile_page = ProfilePage()
+            profile_url = project.config.tmdb_base_web_url + profile_page.url
+            assert browser.driver.current_url == profile_url
+            profile_page.should_have_user_logged_in()
 
     def should_have_user_logged_out(self):
-        self.header_profile_link.should(be.not_.present)
+        with allure.step('Check that user is logged out'):
+            self.header_profile_link.should(be.not_.present)
 
     def should_have_content_visible(self):
-        self.page_header.should(be.visible)
-        self.username_input.should(be.visible)
-        self.password_input.should(be.visible)
-        self.submit_button.should(be.visible)
-        self.reset_password_link.should(be.visible)
-        self.warning.should(be.not_.visible)
+        with allure.step('Check the contents of login page'):
+            self.page_header.should(be.visible)
+            self.username_input.should(be.visible)
+            self.password_input.should(be.visible)
+            self.submit_button.should(be.visible)
+            self.reset_password_link.should(be.visible)
+            self.warning.should(be.not_.visible)
