@@ -6,16 +6,16 @@
 
 ### Используемые технологии
 <p align="center">
-  <code><img width="5%" title="Pycharm" src="readme_images/logos/pycharm.png"></code>
-  <code><img width="5%" title="Python" src="readme_images/logos/python.png"></code>
-  <code><img width="5%" title="Pytest" src="readme_images/logos/pytest.png"></code>
-  <code><img width="5%" title="Selene" src="readme_images/logos/selene.png"></code>
-  <code><img width="5%" title="Selenium" src="readme_images/logos/selenium.png"></code>
-  <code><img width="5%" title="GitHub" src="readme_images/logos/github.png"></code>
-  <code><img width="5%" title="Jenkins" src="readme_images/logos/jenkins.png"></code>
-  <code><img width="5%" title="Selenoid" src="readme_images/logos/selenoid.png"></code>
-  <code><img width="5%" title="Allure Report" src="readme_images/logos/allure_report.png"></code>
-  <code><img width="5%" title="Telegram" src="readme_images/logos/tg.png"></code>
+  <code><img width="5%" title="Pycharm" src="images/logos/pycharm.png"></code>
+  <code><img width="5%" title="Python" src="images/logos/python.png"></code>
+  <code><img width="5%" title="Pytest" src="images/logos/pytest.png"></code>
+  <code><img width="5%" title="Selene" src="images/logos/selene.png"></code>
+  <code><img width="5%" title="Selenium" src="images/logos/selenium.png"></code>
+  <code><img width="5%" title="GitHub" src="images/logos/github.png"></code>
+  <code><img width="5%" title="Jenkins" src="images/logos/jenkins.png"></code>
+  <code><img width="5%" title="Selenoid" src="images/logos/selenoid.png"></code>
+  <code><img width="5%" title="Allure Report" src="images/logos/allure_report.png"></code>
+  <code><img width="5%" title="Telegram" src="images/logos/tg.png"></code>
 </p>
 
 Весь проект выполнен на языке Python, а также дополнительно:
@@ -49,7 +49,7 @@
 
 ### <a href="https://jenkins.autotests.cloud/job/ilyatara-diploma_ui_api/">Сборка Jenkins</a>
 
-<img src="readme_images/screenshots/jenkins_main_page.jpg" alt=""/>
+<img src="images/screenshots/jenkins_main_page.jpg" alt=""/>
 
 
 
@@ -81,7 +81,7 @@ context=selenoid api_timeout=${API_TIMEOUT} pytest tests/api
 
 В Jenkins параметры запуска передаются на странице "Собрать с параметрами":
 
-<img src="readme_images/screenshots/jenkins_parametrized_build.jpg" alt=""/>
+<img src="images/screenshots/jenkins_parametrized_build.jpg" alt=""/>
 
 ### Локальный запуск
 
@@ -116,7 +116,7 @@ allure serve
 
 Перейдите по ссылке "Allure Report" на странице сборки:
 
-<img src="readme_images/screenshots/jenkins_build_page.jpg" alt=""/>
+<img src="images/screenshots/jenkins_build_page.jpg" alt=""/>
 
 
 ### Пример отображения тестов
@@ -125,7 +125,7 @@ allure serve
 
 Если тест запускался в Selenoid, также будет прикреплено видео его прохождения.
 
-<img src="readme_images/screenshots/allure_attachments.jpg" alt=""/>
+<img src="images/screenshots/allure_attachments.jpg" alt=""/>
 
 Пример видео:
 
@@ -149,7 +149,7 @@ https://github.com/ilyatara/themoviedb-tests/assets/135700131/446e5ee3-b705-4d03
 
 Для добавления <code>.env</code> файла в Jenkins необходимо выбрать "Добавить файл сборки" - "Create/Update Text File" с параметрами "Create at Workspace" и "Overwrite file" и поместить его выше скрипта запуска тестов:
 
-<img src="readme_images/screenshots/jenkins_config_env_file.jpg" alt=""/>
+<img src="images/screenshots/jenkins_config_env_file.jpg" alt=""/>
 
 Для получения отчётов о прохождении тестов в Telegram аналогичным образом нужно добавить файл <code>notifications/telegram.json</code>. Образец его заполнения находится в файле <code>notifications/telegram.json.example</code>. В нём необходимо заполнить поля "token" и "chat". Подробнее о заполнении этого файла см. <a href="https://github.com/qa-guru/allure-notifications">документацию проекта allure-notifications</a>.
 
@@ -159,7 +159,7 @@ https://github.com/ilyatara/themoviedb-tests/assets/135700131/446e5ee3-b705-4d03
 
 Для выполнения этих шагов в разделе "Послесборочные операции" необходимо добавить шаги "Allure Report" и "Post build task":
 
-<img src="readme_images/screenshots/jenkins_config_post_build_actions.jpg" alt=""/>
+<img src="images/screenshots/jenkins_config_post_build_actions.jpg" alt=""/>
 
 Скрипт для отправки уведомлений в Telegram:
 
@@ -175,4 +175,4 @@ java "-DconfigFile=notifications/telegram.json" -jar notifications/allure-notifi
 
 ### Пример отчёта о выполнении UI и API тестов:
 
-<img src="readme_images/screenshots/telegram_notification.jpg" alt=""/>
+<img src="images/screenshots/telegram_notification.jpg" alt=""/>
