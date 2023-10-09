@@ -1,12 +1,9 @@
-from datetime import datetime
-
 import pytest
 import allure
 from allure_commons.types import Severity
 
 from themoviedb_tests.utils.file import get_path
 from themoviedb_tests.utils.api import validate_schema, tmdb_request
-from themoviedb_tests.data.movies import Movie
 
 
 DEFAULT_PAGE_SIZE = 20

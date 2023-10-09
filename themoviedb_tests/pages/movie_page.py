@@ -1,7 +1,7 @@
 import time
 
 import allure
-from selene import browser, be, have, by
+from selene import browser, be, have
 
 import project
 from themoviedb_tests.pages.profile_page import ProfilePage

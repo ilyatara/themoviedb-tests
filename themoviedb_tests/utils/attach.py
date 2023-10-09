@@ -1,6 +1,7 @@
 import allure
-import project
 from allure_commons.types import AttachmentType
+
+import project
 
 
 def add_screenshot(browser):
