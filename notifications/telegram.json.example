@@ -1,0 +1,17 @@
+{
+  "base": {
+    "project": "TheMovieDB Tests",
+    "environment": "${CONTEXT}",
+    "comment": "${BROWSER} ${BROWSER_VERSION}",
+    "reportLink": "${BUILD_URL}",
+    "language": "en",
+    "messenger": "telegram",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "*****",
+    "chat": "*****",
+    "replyTo": ""
+  }
+}
