@@ -40,7 +40,7 @@ def test_logged_in_user_can_add_movie_to_favorites(logged_in, clear_favorites):
 @allure.severity(Severity.NORMAL)
 @allure.label('owner', 'Ilya Tarasov')
 @allure.feature('Add movie to favorites')
-@allure.title('Logged in user can add movie to favorites')
+@allure.title('Logged in user can remove movie from favorites')
 def test_logged_in_user_can_remove_movie_from_favorites(logged_in, clear_favorites):
     # ACT
     page = MoviePage(fight_club.id)
