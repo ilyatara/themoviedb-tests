@@ -9,6 +9,7 @@ from themoviedb_tests import utils
 
 class Config(BaseSettings):
     context: Literal['local', 'selenoid'] = 'local'
+
     tmdb_base_api_url: str
     tmdb_base_web_url: str
 
@@ -25,6 +26,7 @@ class Config(BaseSettings):
 
     browser: Literal['chrome', 'firefox'] = 'chrome'
     browser_version: Optional[Literal['100.0', '99.0', '98.0', '97.0']] = None
+    browser_size: Optional[Literal['1366x768', '1600x900', '1920x1080']] = '1920x1080'
 
     selenoid_login: Optional[str] = None
     selenoid_password: Optional[str] = None

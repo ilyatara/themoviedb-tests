@@ -19,6 +19,10 @@ def setup_browser(request):
     browser.config.base_url = project.config.tmdb_base_web_url
     browser.config.timeout = project.config.selene_timeout
 
+    width, height = project.config.browser_size.split('x')
+    browser.config.window_width = width
+    browser.config.window_height = height
+
     if project.config.context == 'selenoid':
 
         if project.config.browser == 'chrome':
