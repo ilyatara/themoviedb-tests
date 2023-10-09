@@ -49,7 +49,7 @@
 
 ### <a href="https://jenkins.autotests.cloud/job/ilyatara-diploma_ui_api/">Сборка Jenkins</a>
 
-<img src="readme_images/screenshots/jenkins_main_page.jpg.jpg" alt=""/>
+<img src="readme_images/screenshots/jenkins_main_page.jpg" alt=""/>
 
 
 
