@@ -1,16 +1,13 @@
 import urllib
-import datetime
 
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selene import browser, be
-import requests
+from selene import browser
 
 import project
 from themoviedb_tests import utils
-from themoviedb_tests.pages.profile_page import ProfilePage
 
 
 TMDB_AUTH_COOKIE_NAME = 'tmdb.session'
@@ -65,7 +62,8 @@ def setup_browser(request):
 
 
 @pytest.fixture(scope='function', autouse=True)
-def set_language_preference():
+def set_language_preference(setup_browser):
+    browser = setup_browser
     cookie = '{"adult":false,"i18n_fallback_language":"","locale":"en-US",' \
              '"country_code":"US","timezone":"America/New_York"}'
     cookie_encoded = urllib.parse.quote(cookie)
@@ -74,23 +72,24 @@ def set_language_preference():
     utils.ui.close_cookies_banner()
 
 
-@pytest.fixture(scope='session', autouse=True)
-def get_auth_cookie():
-    browser.open(project.config.tmdb_base_web_url + '/login')
-    utils.ui.close_cookies_banner()
-    browser.element('#username').type(project.config.tmdb_login)
-    browser.element('#password').type(project.config.tmdb_password)
-    browser.element('#login_button').click()
-    cookie = browser.driver.get_cookie(TMDB_AUTH_COOKIE_NAME)['value']
-    browser.driver.delete_cookie(TMDB_AUTH_COOKIE_NAME)
-    return cookie
-
-
 @pytest.fixture(scope='function', autouse=False)
-def logged_in(get_auth_cookie):
-    browser.open(project.config.tmdb_base_web_url)
-    browser.driver.add_cookie(
-        {'name': TMDB_AUTH_COOKIE_NAME, 'value': get_auth_cookie})
+def logged_in(setup_browser):
+    browser = setup_browser
+    if project.config.tmdb_auth_cookie is None:
+        browser.open(project.config.tmdb_base_web_url + '/login')
+        utils.ui.close_cookies_banner()
+        browser.element('#username').type(project.config.tmdb_login)
+        browser.element('#password').type(project.config.tmdb_password)
+        browser.element('#login_button').click()
+        cookie = browser.driver.get_cookie(TMDB_AUTH_COOKIE_NAME)['value']
+        project.config.tmdb_auth_cookie = cookie
+    else:
+        browser.driver.add_cookie(
+            {'name': TMDB_AUTH_COOKIE_NAME,
+             'value': project.config.tmdb_auth_cookie}
+        )
+    yield
+    browser.driver.delete_cookie(TMDB_AUTH_COOKIE_NAME)
 
 
 @pytest.fixture(scope='function', autouse=False)
