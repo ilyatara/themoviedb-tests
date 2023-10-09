@@ -13,6 +13,10 @@ from themoviedb_tests import utils
 from themoviedb_tests.pages.profile_page import ProfilePage
 
 
+TMDB_AUTH_COOKIE_NAME = 'tmdb.session'
+TMDB_PREF_COOKIE_NAME = 'tmdb.pref'
+
+
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser(request):
     browser.config.base_url = project.config.tmdb_base_web_url
@@ -66,12 +70,12 @@ def set_language_preference():
              '"country_code":"US","timezone":"America/New_York"}'
     cookie_encoded = urllib.parse.quote(cookie)
     browser.open(project.config.tmdb_base_web_url)
-    browser.driver.add_cookie({'name': 'tmdb.prefs', 'value': cookie_encoded})
+    browser.driver.add_cookie({'name': TMDB_PREF_COOKIE_NAME, 'value': cookie_encoded})
     utils.ui.close_cookies_banner()
 
 
 @pytest.fixture(scope='session', autouse=True)
-def save_authorization_cookie():
+def get_auth_cookie():
     # Saving and later setting only one auth cookie
     # via requests doesn't get user logged in
     # for some reason, so we log in via UI.
@@ -96,15 +100,16 @@ def save_authorization_cookie():
     browser.element('#username').type(project.config.tmdb_login)
     browser.element('#password').type(project.config.tmdb_password)
     browser.element('#login_button').click()
-    project.config.tmdb_auth_cookie = browser.driver.get_cookie('tmdb.session')['value']
-    browser.driver.delete_cookie('tmdb.session')
+    cookie = browser.driver.get_cookie(TMDB_AUTH_COOKIE_NAME)['value']
+    browser.driver.delete_cookie(TMDB_AUTH_COOKIE_NAME)
+    return cookie
 
 
 @pytest.fixture(scope='function', autouse=False)
-def logged_in():
-    auth_cookie = project.config.tmdb_auth_cookie
+def logged_in(get_auth_cookie):
     browser.open(project.config.tmdb_base_web_url)
-    browser.driver.add_cookie({'name': 'tmdb.session', 'value': auth_cookie})
+    browser.driver.add_cookie(
+        {'name': TMDB_AUTH_COOKIE_NAME, 'value': get_auth_cookie})
 
 
 @pytest.fixture(scope='function', autouse=False)

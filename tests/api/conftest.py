@@ -24,3 +24,4 @@ def fill_rated_movies_list():
     clear_rated_movies()
     tmdb_request('post', f'/movie/{fight_club.id}/rating',
                  json={'value': project.config.movie_rate_value})
+    yield

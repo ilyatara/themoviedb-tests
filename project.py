@@ -16,7 +16,6 @@ class Config(BaseSettings):
     tmdb_password: str
     tmbd_read_access_token: str
     tmdb_account_id: Optional[str] = None
-    tmdb_auth_cookie: Optional[str] = None
 
     movie_rate_value: float = 8.5
 
