@@ -105,11 +105,11 @@ context=local pytest .
 
 ## Отчёты о прохождении тестов в Allure
 
-### Если тест запускался локально:
+### Если тест запускался локально
 
 Находясь в корневой директории проекта, выполните команду:
 ```
-allure serve
+allure serve allure-results
 ```
 
 ### Если тест запускался в Jenkins
@@ -141,9 +141,9 @@ https://github.com/ilyatara/themoviedb-tests/assets/135700131/446e5ee3-b705-4d03
 
 Для запуска тестов нужно зарегистрироваться на сайте https://www.themoviedb.org/ и указать логин и пароль в переменных **TMDB_LOGIN** и **TMDB_PASSWORD**.
 
-Также для получения токена API необходимо создать приложение на странице https://www.themoviedb.org/settings/api. После создания приложения на ней в разделе API Read Access Token начнёт отображаться токен. Его нужно сохранить как значение настройки **TMDB_READ_ACCESS_TOKEN**.
+Также для получения токена API необходимо создать приложение на странице https://www.themoviedb.org/settings/api. После создания приложения на ней в разделе "API Read Access Token" начнёт отображаться токен. Его нужно сохранить как значение настройки **TMDB_READ_ACCESS_TOKEN**.
 
-Параметр **TMDB_ACCOUNT_ID** заполнять не обязательно. Если он останется пустым, id аккаунта будет получен через API и сохранён в конфигурационном классе Config проекта в файле <code>project.py</code>.
+Параметр **TMDB_ACCOUNT_ID** заполнять необязательно. Если он останется пустым, id аккаунта будет получен через API и сохранён в конфигурационном классе Config проекта в файле <code>project.py</code>.
 
 Для удалённого запуска UI-тестов в Selenoid в настройках с префиксом **SELENOID_** нужно сохранить логин, пароль от сервиса и его базовый url.
 
@@ -151,28 +151,35 @@ https://github.com/ilyatara/themoviedb-tests/assets/135700131/446e5ee3-b705-4d03
 
 <img src="images/screenshots/jenkins_config_env_file.jpg" alt=""/>
 
-Для получения отчётов о прохождении тестов в Telegram аналогичным образом нужно добавить файл <code>notifications/telegram.json</code>. Образец его заполнения находится в файле <code>notifications/telegram.json.example</code>. В нём необходимо заполнить поля "token" и "chat". Подробнее о заполнении этого файла см. <a href="https://github.com/qa-guru/allure-notifications">документацию проекта allure-notifications</a>.
+Для получения отчётов о прохождении тестов в Telegram нужно аналогичным образом добавить файл <code>notifications/telegram.json</code>. В нём необходимо заполнить поля "token" и "chat". Образец заполнения находится в <code>notifications/telegram.json.example</code>. Подробнее о заполнении файла см. <a href="https://github.com/qa-guru/knowledge-base/wiki/11.-%D0%A2%D0%B5%D0%BB%D0%B5%D0%B3%D1%80%D0%B0%D0%BC-%D0%B1%D0%BE%D1%82.-%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC-%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BE-%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0%D1%85-%D0%BF%D1%80%D0%BE%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2">инструкцию</a>.
 
 
 
-## Формирование Allure-отчёта и получение уведомления в Telegram
+## Получение уведомления в Telegram
 
-Для выполнения этих шагов в разделе "Послесборочные операции" необходимо добавить шаги "Allure Report" и "Post build task":
+### Удалённый запуск через Jenkins
+
+Чтобы после тестового прогона в Telegram пришло уведомление с его результатами, в разделе "Послесборочные операции" после шага "Allure-report" необходимо добавить шаг "Post build task":
 
 <img src="images/screenshots/jenkins_config_post_build_actions.jpg" alt=""/>
 
-Скрипт для отправки уведомлений в Telegram:
+Скрипт для отправки уведомлений:
 
 ```
 java "-DconfigFile=notifications/telegram.json" -jar notifications/allure-notifications-4.5.0.jar
 ```
 
+### Локальный запуск
 
+Для отправки уведомлений в Telegram после локального запуска необходимо выполнить команды:
 
-## Уведомление о завершении тестового прогона в Telegram
+```
+allure generate allure-results -o allure-report
+java "-DconfigFile=./notifications/telegram.json" -jar "./notifications/allure-notifications-4.5.0.jar"
+```
 
-Для получения результатов о тестировании используется телеграм-бот. В отчёте отображаются параметры запуска тестового комплекта, время прохождения тестов, а также ссылка на Allure-отчёт.
+### Пример отчёта о выполнении UI и API тестов
 
-### Пример отчёта о выполнении UI и API тестов:
+Для получения результатов о тестировании используется телеграм-бот. В отчёте отображаются параметры запуска тестового комплекта, время прохождения тестов, а также ссылка на Allure-отчёт:
 
 <img src="images/screenshots/telegram_notification.jpg" alt=""/>
