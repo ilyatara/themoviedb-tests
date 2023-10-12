@@ -6,14 +6,15 @@
 
 ### Используемые технологии
 <p align="center">
-  <code><img width="5%" title="Pycharm" src="images/logos/pycharm.png"></code>
   <code><img width="5%" title="Python" src="images/logos/python.png"></code>
   <code><img width="5%" title="Pytest" src="images/logos/pytest.png"></code>
+  <code><img width="5%" title="Requests" src="images/logos/requests.png"></code>
   <code><img width="5%" title="Selene" src="images/logos/selene.png"></code>
   <code><img width="5%" title="Selenium" src="images/logos/selenium.png"></code>
+  <code><img width="5%" title="Selenoid" src="images/logos/selenoid.png"></code>
+  <code><img width="5%" title="Pycharm" src="images/logos/pycharm.png"></code>
   <code><img width="5%" title="GitHub" src="images/logos/github.png"></code>
   <code><img width="5%" title="Jenkins" src="images/logos/jenkins.png"></code>
-  <code><img width="5%" title="Selenoid" src="images/logos/selenoid.png"></code>
   <code><img width="5%" title="Allure Report" src="images/logos/allure_report.png"></code>
   <code><img width="5%" title="Telegram" src="images/logos/tg.png"></code>
 </p>
