@@ -1,8 +1,7 @@
-import os
 from typing import Optional, Literal
 
 from pydantic_settings import BaseSettings
-from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv
 
 from themoviedb_tests import utils
 

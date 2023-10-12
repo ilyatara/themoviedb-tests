@@ -1,7 +1,6 @@
 import json
 
 import requests
-import pytest
 import allure
 from allure_commons.types import AttachmentType
 from curlify import to_curl
