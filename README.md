@@ -48,13 +48,13 @@
 - Получение и изменение списка оцененных пользователем фильмов
 - Получение списка фильмов с наибольшим рейтингом
 
-### <a href="https://jenkins.autotests.cloud/job/ilyatara-diploma_ui_api/">Сборка Jenkins</a>
-
-<img src="images/screenshots/jenkins_main_page.jpg" alt=""/>
-
 
 
 ## Запуск тестов
+
+### <a href="https://jenkins.autotests.cloud/job/ilyatara-diploma_ui_api/">Сборка Jenkins</a>
+
+<img src="images/screenshots/jenkins_main_page.jpg" alt=""/>
 
 ### Удалённый запуск
 
