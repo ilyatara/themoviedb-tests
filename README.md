@@ -104,6 +104,26 @@ context=local pytest .
 
 
 
+## Подготовка к запуску
+
+### Добавление конфигурационных файлов в Jenkins
+
+В корневой директории проекта необходимо создать файл <code>.env</code> с настройками. Пример его заполнения можно посмотреть в файле <code>.env.example</code>.
+
+Для запуска тестов нужно зарегистрироваться на сайте https://www.themoviedb.org/ и указать логин и пароль в переменных **TMDB_LOGIN** и **TMDB_PASSWORD**.
+
+Также для получения токена API необходимо создать приложение на странице https://www.themoviedb.org/settings/api. После создания приложения на ней в разделе "API Read Access Token" начнёт отображаться токен. Его нужно сохранить как значение настройки **TMDB_READ_ACCESS_TOKEN**.
+
+Параметр **TMDB_ACCOUNT_ID** заполнять необязательно. Если он останется пустым, id аккаунта будет получен через API и сохранён в конфигурационном классе Config проекта в файле <code>project.py</code>.
+
+Для удалённого запуска UI-тестов в Selenoid в настройках с префиксом **SELENOID_** нужно сохранить логин, пароль от сервиса и его базовый url.
+
+Чтобы добавить <code>.env</code> файла в Jenkins, выберите "Добавить файл сборки" - "Create/Update Text File" с параметрами "Create at Workspace" и "Overwrite file" и поместите его выше скрипта запуска тестов:
+
+<img src="images/screenshots/jenkins_config_env_file.jpg" alt=""/>
+
+
+
 ## Отчёты о прохождении тестов в Allure
 
 ### Если тест запускался локально
@@ -135,33 +155,13 @@ https://github.com/ilyatara/themoviedb-tests/assets/135700131/446e5ee3-b705-4d03
 
 
 
-## Подготовка к запуску
-
-### Добавление конфигурационных файлов в Jenkins
-
-Для запуска тестов необходимо создать в корневой директории проекта файл <code>.env</code> с настройками. Пример его заполнения можно посмотреть в файле <code>.env.example</code>.
-
-Для запуска тестов нужно зарегистрироваться на сайте https://www.themoviedb.org/ и указать логин и пароль в переменных **TMDB_LOGIN** и **TMDB_PASSWORD**.
-
-Также для получения токена API необходимо создать приложение на странице https://www.themoviedb.org/settings/api. После создания приложения на ней в разделе "API Read Access Token" начнёт отображаться токен. Его нужно сохранить как значение настройки **TMDB_READ_ACCESS_TOKEN**.
-
-Параметр **TMDB_ACCOUNT_ID** заполнять необязательно. Если он останется пустым, id аккаунта будет получен через API и сохранён в конфигурационном классе Config проекта в файле <code>project.py</code>.
-
-Для удалённого запуска UI-тестов в Selenoid в настройках с префиксом **SELENOID_** нужно сохранить логин, пароль от сервиса и его базовый url.
-
-Для добавления <code>.env</code> файла в Jenkins необходимо выбрать "Добавить файл сборки" - "Create/Update Text File" с параметрами "Create at Workspace" и "Overwrite file" и поместить его выше скрипта запуска тестов:
-
-<img src="images/screenshots/jenkins_config_env_file.jpg" alt=""/>
-
-Для получения отчётов о прохождении тестов в Telegram нужно аналогичным образом добавить файл <code>notifications/telegram.json</code>. В нём необходимо заполнить поля "token" и "chat". Образец заполнения находится в <code>notifications/telegram.json.example</code>. Подробнее о заполнении файла см. <a href="https://github.com/qa-guru/knowledge-base/wiki/11.-%D0%A2%D0%B5%D0%BB%D0%B5%D0%B3%D1%80%D0%B0%D0%BC-%D0%B1%D0%BE%D1%82.-%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC-%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BE-%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0%D1%85-%D0%BF%D1%80%D0%BE%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2">инструкцию</a>.
-
-
-
 ## Получение уведомления в Telegram
+
+Для получения отчётов о прохождении тестов в Telegram создайте файл <code>notifications/telegram.json</code>. В нём заполните поля "token" и "chat". Образец заполнения находится в <code>notifications/telegram.json.example</code>. Подробнее о заполнении файла см. <a href="https://github.com/qa-guru/knowledge-base/wiki/11.-%D0%A2%D0%B5%D0%BB%D0%B5%D0%B3%D1%80%D0%B0%D0%BC-%D0%B1%D0%BE%D1%82.-%D0%9E%D1%82%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC-%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BE-%D1%80%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%D0%B0%D1%85-%D0%BF%D1%80%D0%BE%D1%85%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2">инструкцию</a>.
 
 ### Удалённый запуск через Jenkins
 
-Чтобы после тестового прогона в Telegram пришло уведомление с его результатами, в разделе "Послесборочные операции" после шага "Allure-report" необходимо добавить шаг "Post build task":
+В разделе "Послесборочные операции" после шага "Allure-report" добавьте шаг "Post build task":
 
 <img src="images/screenshots/jenkins_config_post_build_actions.jpg" alt=""/>
 
@@ -173,7 +173,7 @@ java "-DconfigFile=notifications/telegram.json" -jar notifications/allure-notifi
 
 ### Локальный запуск
 
-Для отправки уведомлений в Telegram после локального запуска необходимо выполнить команды:
+Для отправки уведомлений в Telegram после локального запуска выполните команды:
 
 ```
 allure generate allure-results -o allure-report
