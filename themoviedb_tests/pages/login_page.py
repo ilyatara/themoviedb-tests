@@ -18,7 +18,6 @@ class LoginPage:
     header_profile_link = browser.element(
         f'.user a[href=/u/{project.config.tmdb_login}"]'
     )
-    accept_cookies_button = browser.element('#onetrust-accept-btn-handler')
 
     def open(self):
         with allure.step('Open login page'):
@@ -48,7 +47,7 @@ class LoginPage:
         with allure.step('Check that user is logged out'):
             self.header_profile_link.should(be.not_.present)
 
-    def should_have_content_visible(self):
+    def should_have_contents_visible(self):
         with allure.step('Check the contents of login page'):
             self.page_header.should(be.visible)
             self.username_input.should(be.visible)

@@ -15,7 +15,7 @@ def test_login_page_contents():
     page = LoginPage()
     page.open()
     # ASSERT
-    page.should_have_content_visible()
+    page.should_have_contents_visible()
 
 
 @allure.tag('web')

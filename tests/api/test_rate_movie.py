@@ -14,14 +14,14 @@ from themoviedb_tests.data.movies import fight_club
 @allure.label('owner', 'Ilya Tarasov')
 @allure.feature('User rated movies')
 @allure.title('Getting the list of user rated movies')
-def test_get_rated_movies_list(fill_rated_movies_list):
+def test_get_user_rated_movies_list(fill_rated_movies_list):
     # ACT
     # wait after request in fixture for the list to get updated
     time.sleep(project.config.api_timeout)
     response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     # ASSERT
     assert response.status_code == 200
-    validate_schema(response.json(), get_path('tests', 'api', 'schemas', 'rated_movies.json'))
+    validate_schema(response.json(), get_path('tests', 'api', 'schemas', 'user_rated_movies.json'))
     movie_from_response = response.json()['results'][0]
     assert movie_from_response['title'] == fight_club.title
     assert movie_from_response['id'] == fight_club.id

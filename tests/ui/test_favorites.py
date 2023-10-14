@@ -29,7 +29,7 @@ def test_logged_in_user_can_add_movie_to_favorites(logged_in, clear_favorites):
     # ACT
     page = MoviePage(fight_club.id)
     page.open()
-    page.should_have_favourite_button_enabled()
+    page.should_have_favorite_button_enabled()
     page.add_to_favorites()
     # ASSERT
     page.should_have_favorite_button_selected()

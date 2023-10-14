@@ -34,7 +34,7 @@ class MoviePage:
         with allure.step('Check that add-to-favorites button is not selected'):
             self.favorite_button.element('span').should(have.no.css_class(('true')))
 
-    def should_have_favourite_button_enabled(self):
+    def should_have_favorite_button_enabled(self):
         with allure.step('Check that add-to-favorites button is enabled'):
             self.favorite_button.hover()
             browser.all('.k-tooltip-content').element_by(
