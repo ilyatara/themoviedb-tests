@@ -4,7 +4,8 @@ import project
 
 
 def close_cookies_banner():
-    if browser.element('#onetrust-accept-btn-handler')\
+    accept_cookies_button = '#onetrust-accept-btn-handler'
+    if browser.element(accept_cookies_button)\
             .with_(timeout=project.config.selene_timeout)\
             .wait_until(be.visible):
-        browser.element('#onetrust-accept-btn-handler').click()
+        browser.element(accept_cookies_button).click()
