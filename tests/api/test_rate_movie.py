@@ -4,7 +4,7 @@ import allure
 from allure_commons.types import Severity
 
 import project
-from themoviedb_tests.utils.file import get_path
+from themoviedb_tests.utils.file import get_abs_path
 from themoviedb_tests.utils.api import validate_schema, tmdb_request
 from themoviedb_tests.data.movies import fight_club
 
@@ -21,7 +21,7 @@ def test_get_user_rated_movies_list(fill_rated_movies_list):
     response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
     # ASSERT
     assert response.status_code == 200
-    validate_schema(response.json(), get_path('tests', 'api', 'schemas', 'user_rated_movies.json'))
+    validate_schema(response.json(), get_abs_path('tests/api/schemas/user_rated_movies.json'))
     movie_from_response = response.json()['results'][0]
     assert movie_from_response['title'] == fight_club.title
     assert movie_from_response['id'] == fight_club.id

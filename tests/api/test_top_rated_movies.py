@@ -2,7 +2,7 @@ import pytest
 import allure
 from allure_commons.types import Severity
 
-from themoviedb_tests.utils.file import get_path
+from themoviedb_tests.utils.file import get_abs_path
 from themoviedb_tests.utils.api import validate_schema, tmdb_request
 
 
@@ -37,7 +37,7 @@ def test_get_top_rated_movies():
 
     validate_schema(
         response.json(),
-        get_path('tests', 'api', 'schemas', 'top_rated_movies.json')
+        get_abs_path('tests/api/schemas/top_rated_movies.json')
     )
 
     movies = response.json()['results']
@@ -64,7 +64,7 @@ def test_top_rated_movies_pagination(page_number):
 
     validate_schema(
         current_page_resp.json(),
-        get_path('tests', 'api', 'schemas', 'top_rated_movies.json')
+        get_abs_path('tests/api/schemas/top_rated_movies.json')
     )
 
     previous_page = previous_page_resp.json()['results']
