@@ -7,10 +7,14 @@ from themoviedb_tests.data.movies import fight_club
 from themoviedb_tests.data.people import justin
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
+pytestmark = [
+    allure.tag('web'),
+    allure.severity(Severity.NORMAL),
+    allure.label('owner', 'Ilya Tarasov'),
+    allure.feature('Search'),
+]
+
+
 @allure.title('Contents of the search page are displayed correctly')
 def test_search_page_contents():
     # ACT
@@ -20,10 +24,6 @@ def test_search_page_contents():
     page.should_have_contents_visible()
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
 @allure.title('Default text changes according to the active tab')
 def test_select_search_tabs_with_no_results():
     # ARRANGE
@@ -36,10 +36,6 @@ def test_select_search_tabs_with_no_results():
         page.should_have_search_tab_active_with_text(st)
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
 @allure.title('Search suggestions are displayed on search input click')
 def test_search_hints_are_visible_after_click_on_search_input():
     # ACT
@@ -50,10 +46,6 @@ def test_search_hints_are_visible_after_click_on_search_input():
     page.should_have_search_hints_visible()
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
 @allure.title('Search suggestions are clickable')
 def test_search_hints_are_functional():
     # ACT
@@ -65,16 +57,12 @@ def test_search_hints_are_functional():
     page.should_have_movie_data_in_first_search_result()
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
 @allure.title('Finding a movie by title')
 def test_search_movie():
     # ACT
     page = SearchPage()
     page.open()
-    page.send_search_request(fight_club.title)
+    page.send_search_query(fight_club.title)
     # ASSERT
     page.should_have_movie_data_in_first_search_result(
         fight_club.title,
@@ -84,16 +72,12 @@ def test_search_movie():
     )
 
 
-@allure.tag('web')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Search')
 @allure.title('Finding a person by full name')
 def test_search_person():
     # ACT
     page = SearchPage()
     page.open()
-    page.send_search_request(justin.full_name)
+    page.send_search_query(justin.full_name)
     # ASSERT
     page.should_have_person_data_in_first_search_result(
         justin.full_name,

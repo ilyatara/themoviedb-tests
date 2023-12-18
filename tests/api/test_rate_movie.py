@@ -9,10 +9,14 @@ from themoviedb_tests.utils.api import validate_schema, tmdb_request
 from themoviedb_tests.data.movies import fight_club
 
 
-@allure.tag('api')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('User rated movies')
+pytestmark = [
+    allure.tag('api'),
+    allure.severity(Severity.NORMAL),
+    allure.label('owner', 'Ilya Tarasov'),
+    allure.feature('User rated movies')
+]
+
+
 @allure.title('Getting the list of user rated movies')
 def test_get_user_rated_movies_list(fill_rated_movies_list):
     # ACT
@@ -30,10 +34,6 @@ def test_get_user_rated_movies_list(fill_rated_movies_list):
     assert movie_from_response['rating'] == project.config.movie_rate_value
 
 
-@allure.tag('api')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('User rated movies')
 @allure.title('Giving a rating to a movie')
 def test_add_movie_rate(clear_rated_movies_list):
     # ACT
@@ -49,10 +49,6 @@ def test_add_movie_rate(clear_rated_movies_list):
     assert rated_movies.json()['results'][0]['rating'] == project.config.movie_rate_value
 
 
-@allure.tag('api')
-@allure.severity(Severity.NORMAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('User rated movies')
 @allure.title('Deleting a rating from a movie')
 def test_delete_movie_rate(fill_rated_movies_list):
     # ACT

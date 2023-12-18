@@ -6,16 +6,24 @@ from themoviedb_tests.utils.file import get_abs_path
 from themoviedb_tests.utils.api import validate_schema, tmdb_request
 
 
+pytestmark = [
+    allure.tag('api'),
+    allure.severity(Severity.CRITICAL),
+    allure.label('owner', 'Ilya Tarasov'),
+    allure.feature('Top rated movies')
+]
+
+
 DEFAULT_PAGE_SIZE = 20
 
 
 def assert_rating_descending(movies):
-    '''
+    """
     TheMovieDB has changed its rating system, so that now the
     following movie may have rating slightly bigger than the previous one.
     But the last movie on the page is almost guaranteed to have
     lower rating than the first one. Here we verify only that this is true.
-    '''
+    """
     # previous_movie_rating = movies[0]['vote_average']
     # for movie in movies[1:]:
     #     assert movie['vote_average'] <= previous_movie_rating
@@ -23,10 +31,6 @@ def assert_rating_descending(movies):
     assert movies[0]['vote_average'] > movies[-1]['vote_average']
 
 
-@allure.tag('api')
-@allure.severity(Severity.CRITICAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Top rated movies')
 @allure.title('Top rated movies are sorted by rating descending')
 def test_get_top_rated_movies():
     # ACT
@@ -46,10 +50,6 @@ def test_get_top_rated_movies():
     assert_rating_descending(movies)
 
 
-@allure.tag('api')
-@allure.severity(Severity.CRITICAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Top rated movies')
 @allure.title('Top rated movies sorting with pagination')
 @pytest.mark.parametrize('page_number', [2, 10, 50])
 def test_top_rated_movies_pagination(page_number):
@@ -73,10 +73,6 @@ def test_top_rated_movies_pagination(page_number):
     assert_rating_descending(current_page)
 
 
-@allure.tag('api')
-@allure.severity(Severity.CRITICAL)
-@allure.label('owner', 'Ilya Tarasov')
-@allure.feature('Top rated movies')
 @allure.title('Movie data in the top rated list is correct')
 @pytest.mark.parametrize('movie_index', range(0, 9, 19))
 def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index):
