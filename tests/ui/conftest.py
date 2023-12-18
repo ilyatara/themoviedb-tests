@@ -57,7 +57,9 @@ def setup_browser(request):
 
     utils.attach.add_html(browser)
     utils.attach.add_screenshot(browser)
-    utils.attach.add_logs(browser)
+
+    if project.config.browser == 'chrome':
+        utils.attach.add_logs(browser)
 
     if project.config.context == 'selenoid':
         utils.attach.add_video(browser)
