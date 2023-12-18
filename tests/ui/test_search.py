@@ -55,7 +55,7 @@ def test_search_hints_are_visible_after_click_on_search_input():
 @allure.label('owner', 'Ilya Tarasov')
 @allure.feature('Search')
 @allure.title('Search suggestions are clickable')
-def test_search_hins_are_functional():
+def test_search_hints_are_functional():
     # ACT
     page = SearchPage()
     page.open()

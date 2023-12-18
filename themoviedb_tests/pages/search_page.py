@@ -29,12 +29,12 @@ class SearchPage:
 
     def click_on_search_hint(self, index=1):
         with allure.step('Click on search suggestion'):
-            self.search_request = self.search_hints[index].get(query.text)
+            self.search_query = self.search_hints[index].get(query.text)
             self.search_hints[index].click()
 
-    def send_search_request(self, value):
-        with allure.step(f'Send search request: {value}'):
-            self.search_request = value
+    def send_search_query(self, value):
+        with allure.step(f'Send search query: {value}'):
+            self.search_query = value
             self.click_on_search_input()
             self.search_input.type(value).press_enter()
 
@@ -67,20 +67,20 @@ class SearchPage:
             self.search_hints.should(have.size(10))
 
     def should_have_movie_data_in_first_search_result(
-            self, title=None, release_date=None, overview=None, id=None
+            self, title=None, release_date=None, overview=None, id_=None
     ):
         with allure.step('Check that the movie is first in search results'):
             first_result = self.movie_search_results[0]
             if title is None:
-                title = self.search_request
+                title = self.search_query
             first_result.element('h2').should(have.exact_text(title))
             if release_date:
                 first_result.element('.release_date').should(have.exact_text(release_date))
             if overview:
                 result_overview = first_result.element('.overview').get(query.text)
                 assert overview[:200] == result_overview[:200]
-            if id:
-                expected_link = f'{project.config.tmdb_base_web_url}/movie/{id}'
+            if id_:
+                expected_link = f'{project.config.tmdb_base_web_url}/movie/{id_}'
                 first_result.element('.title a').should(have.attribute('href', expected_link))
                 first_result.element('.image a').should(have.attribute('href', expected_link))
 
