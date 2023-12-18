@@ -61,11 +61,18 @@ def get_tmdb_account_id():
     return account_id
 
 
+def delete_all_rated_movies():
+    response = tmdb_request('get', f'/account/{project.config.tmdb_account_id}/rated/movies')
+    rated_movies_ids = [movie['id'] for movie in response.json()['results']]
+    for movie_id in rated_movies_ids:
+        tmdb_request('delete', f'/movie/{movie_id}/rating')
+
+
 def delete_all_favorites():
     url_get = f'/account/{project.config.tmdb_account_id}/favorite/movies'
     url_post = f'/account/{project.config.tmdb_account_id}/favorite'
     response = tmdb_request('get', url_get)
     fav_ids = [fav['id'] for fav in response.json()['results']]
-    for id in fav_ids:
-        json = {"media_type": "movie", "media_id": id, "favorite": False}
-        tmdb_request('post', url_post, json=json)
+    for fav_id in fav_ids:
+        body = {"media_type": "movie", "media_id": fav_id, "favorite": False}
+        tmdb_request('post', url_post, json=body)

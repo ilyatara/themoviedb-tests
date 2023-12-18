@@ -18,7 +18,7 @@ pytestmark = [
 
 
 @allure.title('Getting the list of user rated movies')
-def test_get_user_rated_movies_list(fill_rated_movies_list):
+def test_get_user_rated_movies_list(fill_rated_movies):
     # ACT
     # wait after request in fixture for the list to get updated
     time.sleep(project.config.api_timeout)
@@ -35,7 +35,7 @@ def test_get_user_rated_movies_list(fill_rated_movies_list):
 
 
 @allure.title('Giving a rating to a movie')
-def test_add_movie_rate(clear_rated_movies_list):
+def test_add_movie_rate(clear_rated_movies):
     # ACT
     response = tmdb_request('post', f'/movie/{fight_club.id}/rating',
                             json={'value': project.config.movie_rate_value})
@@ -50,7 +50,7 @@ def test_add_movie_rate(clear_rated_movies_list):
 
 
 @allure.title('Deleting a rating from a movie')
-def test_delete_movie_rate(fill_rated_movies_list):
+def test_delete_movie_rate(fill_rated_movies):
     # ACT
     response = tmdb_request('delete', f'/movie/{fight_club.id}/rating')
     # ASSERT
