@@ -41,7 +41,7 @@
 ### <a href="https://github.com/ilyatara/themoviedb-tests/tree/master/tests/ui">UI-тесты</a>
 - Авторизация пользователя
 - Поиск фильмов и людей
-- Добавление фильма в **Понравившееся**
+- Добавление фильма в **Избранное**
 
 ### <a href="https://github.com/ilyatara/themoviedb-tests/tree/master/tests/api">API-тесты</a>
 
@@ -86,7 +86,7 @@ context=selenoid api_timeout=${API_TIMEOUT} pytest tests/api
 
 ### Локальный запуск
 
-Локальный запуск всех тестов с дефолтными значениями конфигурационных переменных:
+Локальный запуск всех тестов с дефолтными значениями конфигурационных переменных (Linux, MacOS):
 ```
 python -m venv .venv
 source .venv/bin/activate
@@ -95,9 +95,23 @@ poetry install
 pytest .
 ```
 
+Аналогичные команды для Windows:
+```
+python -m venv .venv
+venv\Scripts\activate
+pip install poetry
+poetry install
+pytest .
+```
+
 При локальном запуске устанавливать переменную "context" необязательно, т.к. её значение "local" является дефолтным. Если переменная "context" имеет другое значение, её необходимо переопределить:
 ```
 context=local pytest .
+```
+
+Windows:
+```
+$env:context='local'; pytest .
 ```
 
 Подробнее о синтаксе выбора директории/файлов/тестов для запуска см. <a href="https://docs.pytest.org/en/7.1.x/how-to/usage.html">документацию PyTest</a>.
@@ -118,7 +132,7 @@ context=local pytest .
 
 Для удалённого запуска UI-тестов в Selenoid в настройках с префиксом **SELENOID_** нужно сохранить логин, пароль от сервиса и его базовый url.
 
-Чтобы добавить <code>.env</code> файла в Jenkins, выберите "Добавить файл сборки" - "Create/Update Text File" с параметрами "Create at Workspace" и "Overwrite file" и поместите его выше скрипта запуска тестов:
+Чтобы добавить <code>.env</code> файл в Jenkins, выберите "Добавить файл сборки" - "Create/Update Text File" с параметрами "Create at Workspace" и "Overwrite file" и поместите его выше скрипта запуска тестов:
 
 <img src="images/screenshots/jenkins_config_env_file.jpg" alt=""/>
 
