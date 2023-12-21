@@ -15,26 +15,23 @@ pytestmark = [
 
 
 DEFAULT_PAGE_SIZE = 20
+# TOP_RATED_MOVIES_URL = '/movie/top_rated'      # deprecated
+VOTE_COUNT = 1000
+TOP_RATED_MOVIES_URL = f'/discover/movie?sort_by=vote_average.desc&vote_count.gte={VOTE_COUNT}'
 
 
 def assert_rating_descending(movies):
-    """
-    TheMovieDB has changed its rating system, so that now the
-    following movie may have rating slightly bigger than the previous one.
-    But the last movie on the page is almost guaranteed to have
-    lower rating than the first one. Here we verify only that this is true.
-    """
-    # previous_movie_rating = movies[0]['vote_average']
-    # for movie in movies[1:]:
-    #     assert movie['vote_average'] <= previous_movie_rating
-    #     previous_movie_rating = movie['vote_average']
-    assert movies[0]['vote_average'] > movies[-1]['vote_average']
+    previous_movie_rating = movies[0]['vote_average']
+    for movie in movies[1:]:
+        assert movie['vote_count'] >= VOTE_COUNT
+        assert movie['vote_average'] <= previous_movie_rating
+        previous_movie_rating = movie['vote_average']
 
 
 @allure.title('Top rated movies are sorted by rating descending')
 def test_get_top_rated_movies():
     # ACT
-    response = tmdb_request('get', '/movie/top_rated')
+    response = tmdb_request('get', TOP_RATED_MOVIES_URL)
     # ASSERT
     assert response.status_code == 200
     validate_schema(
@@ -50,9 +47,9 @@ def test_get_top_rated_movies():
 @pytest.mark.parametrize('page_number', [2, 10, 50])
 def test_top_rated_movies_pagination(page_number):
     # ARRANGE
-    previous_page_resp = tmdb_request('get', '/movie/top_rated', params={'page': page_number-1})
+    previous_page_resp = tmdb_request('get', TOP_RATED_MOVIES_URL, params={'page': page_number-1})
     # ACT
-    current_page_resp = tmdb_request('get', '/movie/top_rated', params={'page': page_number})
+    current_page_resp = tmdb_request('get', TOP_RATED_MOVIES_URL, params={'page': page_number})
     # ASSERT
     assert current_page_resp.status_code == 200
     validate_schema(
@@ -61,15 +58,15 @@ def test_top_rated_movies_pagination(page_number):
     )
     previous_page = previous_page_resp.json()['results']
     current_page = current_page_resp.json()['results']
-    assert previous_page[0]['vote_average'] > current_page[0]['vote_average']
+    assert previous_page[-1]['vote_average'] >= current_page[0]['vote_average']
     assert_rating_descending(current_page)
 
 
 @allure.title('Movie data in the top rated list is correct')
-@pytest.mark.parametrize('movie_index', range(0, 9, 19))
+@pytest.mark.parametrize('movie_index', range(20))
 def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index):
     # ARRANGE
-    response = tmdb_request('get', '/movie/top_rated')
+    response = tmdb_request('get', TOP_RATED_MOVIES_URL)
     movie_from_list = response.json()['results'][movie_index]
     # ACT
     response = tmdb_request('get', f'/movie/{movie_from_list["id"]}')
@@ -80,5 +77,8 @@ def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index
             if attribute in ['vote_count', 'backdrop_path']:
                 # these attributes' values may differ for some reason
                 pass
+            elif attribute == 'vote_average':
+                # vote_average on the details page is rounded to 1 digit after the decimal point
+                assert movie_from_list['vote_average'] == round(movie_details['vote_average'], 1)
             else:
                 assert movie_from_list[attribute] == movie_details[attribute]
