@@ -9,6 +9,7 @@ from themoviedb_tests.pages.profile_page import ProfilePage
 
 class MoviePage:
     favorite_button = browser.element('#favourite')
+    tooltips = browser.all('.k-tooltip-content')
 
     def __init__(self, id):
         self.id = id
@@ -28,23 +29,23 @@ class MoviePage:
 
     def should_have_favorite_button_selected(self):
         with allure.step('Check that add-to-favorites button is selected'):
-            self.favorite_button.element('span').should(have.css_class(('true')))
+            self.favorite_button.element('span').should(have.css_class('true'))
 
     def should_not_have_favorite_button_selected(self):
         with allure.step('Check that add-to-favorites button is not selected'):
-            self.favorite_button.element('span').should(have.no.css_class(('true')))
+            self.favorite_button.element('span').should(have.no.css_class('true'))
 
     def should_have_favorite_button_enabled(self):
         with allure.step('Check that add-to-favorites button is enabled'):
             self.favorite_button.hover()
-            browser.all('.k-tooltip-content').element_by(
+            self.tooltips.element_by(
                 have.exact_text('Mark as favorite')
             ).should(be.visible)
 
     def should_have_favorite_button_disabled(self):
         with allure.step('Check that add-to-favorites button is disabled'):
             self.favorite_button.hover()
-            browser.all('.k-tooltip-content').element_by(
+            self.tooltips.element_by(
                 have.exact_text('Login to add this movie to your favorite list')
             ).should(be.visible)
 
