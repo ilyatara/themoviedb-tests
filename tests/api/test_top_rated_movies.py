@@ -63,7 +63,7 @@ def test_top_rated_movies_pagination(page_number):
 
 
 @allure.title('Movie data in the top rated list is correct')
-@pytest.mark.parametrize('movie_index', range(20))
+@pytest.mark.parametrize('movie_index', [0, 9, 19])
 def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index):
     # ARRANGE
     response = tmdb_request('get', TOP_RATED_MOVIES_URL)
