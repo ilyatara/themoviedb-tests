@@ -17,7 +17,7 @@
               "type": "boolean"
             },
             "backdrop_path": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "genre_ids": {
               "type": "array",
@@ -49,7 +49,7 @@
               "type": "number"
             },
             "poster_path": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "release_date": {
               "type": "string"

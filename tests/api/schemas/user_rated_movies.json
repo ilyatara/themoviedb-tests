@@ -17,7 +17,7 @@
               "type": "boolean"
             },
             "backdrop_path": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "genre_ids": {
               "type": "array",

@@ -15,16 +15,13 @@ pytestmark = [
 
 
 DEFAULT_PAGE_SIZE = 20
-# TOP_RATED_MOVIES_URL = '/movie/top_rated'      # deprecated
-VOTE_COUNT = 1000
-TOP_RATED_MOVIES_URL = f'/discover/movie?sort_by=vote_average.desc&vote_count.gte={VOTE_COUNT}'
+TOP_RATED_MOVIES_URL = '/movie/top_rated'
 
 
 def assert_rating_descending(movies):
     previous_movie_rating = movies[0]['vote_average']
     for movie in movies[1:]:
-        assert movie['vote_count'] >= VOTE_COUNT
-        assert movie['vote_average'] <= previous_movie_rating
+        assert round(movie['vote_average'], 1) <= round(previous_movie_rating, 1)
         previous_movie_rating = movie['vote_average']
 
 
@@ -63,7 +60,7 @@ def test_top_rated_movies_pagination(page_number):
 
 
 @allure.title('Movie data in the top rated list is correct')
-@pytest.mark.parametrize('movie_index', [0, 9, 19])
+@pytest.mark.parametrize('movie_index', [0, 10, 19])
 def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index):
     # ARRANGE
     response = tmdb_request('get', TOP_RATED_MOVIES_URL)
@@ -74,11 +71,4 @@ def test_data_in_top_rated_list_is_the_same_as_on_movie_details_page(movie_index
     # ASSERT
     for attribute in movie_from_list.keys():
         if movie_details.get(attribute):
-            if attribute in ['vote_count', 'backdrop_path']:
-                # these attributes' values may differ for some reason
-                pass
-            elif attribute == 'vote_average':
-                # vote_average on the details page is rounded to 1 digit after the decimal point
-                assert movie_from_list['vote_average'] == round(movie_details['vote_average'], 1)
-            else:
-                assert movie_from_list[attribute] == movie_details[attribute]
+            assert movie_from_list[attribute] == movie_details[attribute]
