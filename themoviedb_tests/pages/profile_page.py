@@ -26,17 +26,17 @@ class ProfilePage:
 
     def should_have_user_logged_out(self):
         with allure.step('Check that user is logged out'):
-            self.menu_itmes.should(have.size(self.logged_out_menu_items_count))
+            self.menu_items.should(have.size(self.logged_out_menu_items_count))
             self.header_profile_link.should(be.not_.visible)
-
-    def should_not_have_movie_in_favorites(self):
-        with allure.step('Check that favorites list is empty'):
-            self.open_favorites()
-            self.favorites_container.should(
-                have.exact_text(("You haven't added any favorite movies.")))
 
     def should_have_movie_in_favorites(self, movie):
         with allure.step('Check that movie is present in favorites list'):
             self.open_favorites()
             self.favorites_container.all('div[id^=card_movie_]')[0].element('.title h2')\
                 .should(have.exact_text(movie.title))
+
+    def should_not_have_movie_in_favorites(self):
+        with allure.step('Check that favorites list is empty'):
+            self.open_favorites()
+            self.favorites_container.should(
+                have.exact_text(("You haven't added any favorite TV shows.")))

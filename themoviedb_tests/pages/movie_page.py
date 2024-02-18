@@ -49,15 +49,15 @@ class MoviePage:
                 have.exact_text('Login to add this movie to your favorite list')
             ).should(be.visible)
 
+    def should_have_added_to_favorites(self, movie):
+        with allure.step('Check that movie was added to favorites'):
+            profile = ProfilePage()
+            time.sleep(project.config.selene_timeout)
+            profile.should_have_movie_in_favorites(movie)
+
     def should_not_have_added_to_favorites(self):
         with allure.step('Check that movie wasn\'t added to favorites'):
             profile = ProfilePage()
             # wait for changes to apply
             time.sleep(project.config.selene_timeout)
             profile.should_not_have_movie_in_favorites()
-
-    def should_have_added_to_favorites(self, movie):
-        with allure.step('Check that movie was added to favorites'):
-            profile = ProfilePage()
-            time.sleep(project.config.selene_timeout)
-            profile.should_have_movie_in_favorites(movie)
